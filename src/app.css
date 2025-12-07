@@ -1,0 +1,278 @@
+@import 'tailwindcss';
+
+/*
+ * Editorial Design System
+ * Minimalist black & white with strategic accent colors
+ * Typography: Source Serif 4 + Source Code Pro
+ */
+
+/* Configure dark mode to use .dark class (for mode-watcher) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	/* Light Mode (default) */
+	--color-background: oklch(1 0 0);
+	--color-foreground: oklch(0.1 0 0);
+	--color-muted: oklch(0.97 0 0);
+	--color-muted-foreground: oklch(0.35 0 0);
+	--color-border: oklch(0.88 0 0);
+	--color-ring: oklch(0.1 0 0);
+
+	/* Accent Colors */
+	--color-accent: oklch(0.45 0.2 260); /* Deep blue */
+	--color-accent-foreground: oklch(1 0 0);
+
+	/* Typography */
+	--font-sans: 'Google Sans Code', ui-monospace, SFMono-Regular, monospace;
+	--font-mono: 'Google Sans Code', ui-monospace, SFMono-Regular, monospace;
+
+	/* Spacing Scale */
+	--spacing-section: 120px;
+	--spacing-block: 64px;
+	--spacing-element: 32px;
+
+	/* Border Radius - Minimal */
+	--radius-sm: 2px;
+	--radius-md: 4px;
+	--radius-lg: 6px;
+}
+
+/* Dark Mode */
+.dark {
+	--color-background: oklch(0.08 0 0);
+	--color-foreground: oklch(0.95 0 0);
+	--color-muted: oklch(0.12 0 0);
+	--color-muted-foreground: oklch(0.7 0 0);
+	--color-border: oklch(0.2 0 0);
+	--color-ring: oklch(0.95 0 0);
+	--color-accent: oklch(0.65 0.18 260);
+}
+
+/* Base Styles */
+html {
+	font-family: var(--font-sans);
+}
+
+body {
+	background-color: var(--color-background);
+	color: var(--color-foreground);
+	font-size: 1.125rem;
+	line-height: 1.7;
+	min-height: 100vh;
+	font-weight: 300;
+	letter-spacing: -0.01em;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
+}
+
+/* Typography Scale - Editorial */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-sans);
+	font-weight: 500;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+h1 {
+	font-size: clamp(2.5rem, 6vw, 4rem);
+	font-weight: 300;
+}
+
+h2 {
+	font-size: clamp(1.75rem, 4vw, 2.5rem);
+	font-weight: 400;
+}
+
+h3 {
+	font-size: clamp(1.25rem, 3vw, 1.75rem);
+	font-weight: 400;
+}
+
+h4 {
+	font-size: 1.25rem;
+	font-weight: 500;
+}
+
+/* Label/Category Text */
+.label {
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--color-muted-foreground);
+}
+
+/* Focus Indicators */
+:focus-visible {
+	outline: 2px solid var(--color-ring);
+	outline-offset: 4px;
+}
+
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+/* Links - Minimal underline */
+a {
+	color: inherit;
+	text-decoration: none;
+	transition: opacity 0.2s ease;
+}
+
+table {
+	width: 100%;
+	border-spacing: 1rem 0.5rem;
+  border-collapse: separate;
+}
+
+a:hover {
+	opacity: 0.6;
+}
+
+/* Decorative Link Style */
+.link-underline {
+	position: relative;
+	display: inline-block;
+}
+
+.link-underline::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 100%;
+	height: 1px;
+	background-color: currentColor;
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 0.3s ease;
+}
+
+.link-underline:hover::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
+/* Dividers */
+.divider {
+	height: 1px;
+	background-color: var(--color-border);
+	border: none;
+}
+
+/* Selection */
+::selection {
+	background-color: var(--color-foreground);
+	color: var(--color-background);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+/* Prose Styles for Blog */
+.prose {
+	font-size: 1.125rem;
+	line-height: 1.8;
+}
+
+.prose h2 {
+	margin-top: 3rem;
+	margin-bottom: 1.5rem;
+}
+
+.prose h3 {
+	margin-top: 2.5rem;
+	margin-bottom: 1rem;
+}
+
+.prose p {
+	margin-bottom: 1.5rem;
+}
+
+.prose a {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+}
+
+.prose a:hover {
+	opacity: 1;
+	text-decoration-thickness: 2px;
+}
+
+.prose ul,
+.prose ol {
+	margin-bottom: 1.5rem;
+	padding-left: 1.5rem;
+}
+
+.prose li {
+	margin-bottom: 0.75rem;
+}
+
+.prose pre {
+	font-family: var(--font-mono);
+	background-color: var(--color-muted);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	padding: 1.25rem;
+	overflow-x: auto;
+	margin-bottom: 1.5rem;
+	font-size: 0.875rem;
+}
+
+.prose code {
+	font-family: var(--font-mono);
+	font-size: 0.9em;
+}
+
+.prose :not(pre) > code {
+	background-color: var(--color-muted);
+	padding: 0.2rem 0.4rem;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-border);
+}
+
+.prose blockquote {
+	border-left: 2px solid var(--color-foreground);
+	padding-left: 1.5rem;
+	font-style: italic;
+	margin-bottom: 1.5rem;
+	color: var(--color-muted-foreground);
+}
+
+.prose img {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--radius-md);
+	margin-bottom: 1.5rem;
+}
+
+.prose hr {
+	border: none;
+	height: 1px;
+	background-color: var(--color-border);
+	margin: 3rem 0;
+}

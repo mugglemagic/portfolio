@@ -1,0 +1,10 @@
+# Package managers
+node_modules
+pnpm-lock.yaml
+
+# Build outputs
+build
+.svelte-kit
+
+# Documentation (keep as-is)
+*.md
