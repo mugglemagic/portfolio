@@ -1,0 +1,1 @@
+import{o as a}from"./BNPA_p_8.js";a();

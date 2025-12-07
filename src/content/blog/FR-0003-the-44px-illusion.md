@@ -187,7 +187,6 @@ Sometimes the best solution is the one nobody notices.
 **References:**
 - [WCAG 2.5.5 Target Size (Enhanced)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)
 - [React Aria Switch](https://react-spectrum.adobe.com/react-aria/Switch.html)
-- [Switch PRD](../../packages/ui/components/themis/docs/prd/switch-prd.md)
 
 ---
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://markbasford.com/sitemap.xml

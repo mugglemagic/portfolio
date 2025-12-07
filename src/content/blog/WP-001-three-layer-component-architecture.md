@@ -2019,8 +2019,3 @@ The invisible layer does the work. The visible layer gets the attention. Everyon
 ---
 
 *This white paper represents research and implementation experience by Mark Basford. The Three-Layer Architecture is implemented in the Themis component library.*
-
-*For implementation examples, see:*
-- *[Button Component](../../frontend/packages/ui/components/themis/elements/Button/Button.tsx)*
-- *[Switch Component](../../frontend/packages/ui/components/themis/elements/Switch/Switch.tsx)*
-- *[The 44px Illusion Blog Post](../../frontend/docs/blogs/FR-0003-the-44px-illusion.md)*

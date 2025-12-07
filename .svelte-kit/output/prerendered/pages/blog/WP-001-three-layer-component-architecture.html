@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="manifest" href="/manifest.webmanifest" />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+		
+		<link href="../_app/immutable/assets/0.BF8zXpst.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.gJeQT9fj.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/XUMD-9Mr.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BNPA_p_8.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.6Y1gGeRj.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DCf4JqPx.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/B-iva8rw.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/C8YSO-qe.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BqisEWkp.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/B4GcWvgj.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.B6H7cPzz.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DmT9Q6NN.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/D0ihxO46.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Dg5uvz-Z.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/IVcZ5moH.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Cw41v0MJ.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/5.DBA4cNcK.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/QRiZD35W.js"><!--1mz03nk--><!--[!--><!--]--> <!----><script>(function setInitialMode({ defaultMode = "system", themeColors: themeColors2, darkClassNames: darkClassNames2 = ["dark"], lightClassNames: lightClassNames2 = [], defaultTheme = "", modeStorageKey: modeStorageKey2 = "mode-watcher-mode", themeStorageKey: themeStorageKey2 = "mode-watcher-theme" }) {
+  const rootEl = document.documentElement;
+  const mode = localStorage.getItem(modeStorageKey2) ?? defaultMode;
+  const theme = localStorage.getItem(themeStorageKey2) ?? defaultTheme;
+  const light = mode === "light" || mode === "system" && window.matchMedia("(prefers-color-scheme: light)").matches;
+  if (light) {
+    if (darkClassNames2.length)
+      rootEl.classList.remove(...darkClassNames2.filter(Boolean));
+    if (lightClassNames2.length)
+      rootEl.classList.add(...lightClassNames2.filter(Boolean));
+  } else {
+    if (lightClassNames2.length)
+      rootEl.classList.remove(...lightClassNames2.filter(Boolean));
+    if (darkClassNames2.length)
+      rootEl.classList.add(...darkClassNames2.filter(Boolean));
+  }
+  rootEl.style.colorScheme = light ? "light" : "dark";
+  if (themeColors2) {
+    const themeMetaEl = document.querySelector('meta[name="theme-color"]');
+    if (themeMetaEl) {
+      themeMetaEl.setAttribute("content", mode === "light" ? themeColors2.light : themeColors2.dark);
+    }
+  }
+  if (theme) {
+    rootEl.setAttribute("data-theme", theme);
+    localStorage.setItem(themeStorageKey2, theme);
+  }
+  localStorage.setItem(modeStorageKey2, mode);
+})({"defaultMode":"system","darkClassNames":["dark"],"lightClassNames":[],"defaultTheme":"","modeStorageKey":"mode-watcher-mode","themeStorageKey":"mode-watcher-theme"});</script><!----><!----><!--ojxrft--><meta name="description" content="How we built a unified documentation site that serves engineers, product, and AI assistants equally well."/> <link rel="canonical" href="https://markbasford.com/blog/WP-001-three-layer-component-architecture"/> <meta property="og:type" content="article"/> <meta property="og:url" content="https://markbasford.com/blog/WP-001-three-layer-component-architecture"/> <meta property="og:title" content="Three layer component architecture | Mark Basford"/> <meta property="og:description" content="How we built a unified documentation site that serves engineers, product, and AI assistants equally well."/> <meta property="og:image" content="https://markbasford.com/headshot.jpg"/> <meta property="og:image:width" content="1200"/> <meta property="og:image:height" content="630"/> <meta name="twitter:card" content="summary_large_image"/> <meta name="twitter:title" content="Three layer component architecture | Mark Basford"/> <meta name="twitter:description" content="How we built a unified documentation site that serves engineers, product, and AI assistants equally well."/> <meta name="twitter:image" content="https://markbasford.com/headshot.jpg"/> <!--[--><meta name="author" content="Mark Basford"/> <!--[--><meta property="article:published_time" content="2025-12-07T00:00:00.000Z"/><!--]--> <meta property="article:author" content="Mark Basford"/> <!--[--><meta property="article:tag" content="white-paper, architecture, accessibility, documentation"/><!--]--><!--]--> <!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Mark Basford","url":"https://markbasford.com","jobTitle":"Frontend Architect","description":"Frontend architect specialising in accessibility-first development","sameAs":["https://www.linkedin.com/in/mark-basford-78a43390/","https://github.com/mugglemagic"],"knowsAbout":["Web Accessibility","Frontend Development","React","Vue","SvelteKit","TypeScript","PHP","Laravel"]}</script><!----> <!--[--><!----><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Three layer component architecture | Mark Basford","description":"How we built a unified documentation site that serves engineers, product, and AI assistants equally well.","datePublished":"2025-12-07T00:00:00.000Z","author":{"@type":"Person","name":"Mark Basford","url":"https://markbasford.com"},"publisher":{"@type":"Person","name":"Mark Basford"}}</script><!----><!--]--><!----><title>Three layer component architecture | Mark Basford</title>
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[--><!----><!--[!--><!--]--><!----> <a href="#main-content" class="skip-link svelte-supu7d">Skip to main content</a><!----> <div class="flex min-h-screen flex-col"><header class="border-b border-border"><div class="mx-auto flex max-w-4xl items-center justify-between px-6 py-6"><a href="/" class="text-lg font-medium tracking-tight transition-opacity hover:opacity-60">Mark Basford</a> <nav aria-label="Main navigation" class="flex items-center gap-1"><!--[--><a href="/" class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring opacity-60">Home</a><a href="/about" class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring opacity-60">About</a><a href="/blog" class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-4 py-2 text-sm transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring opacity-100" aria-current="page">Blog</a><!--]--> <!--[!--><button data-slot="button" class="focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium outline-none transition-all focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 size-9 min-h-[44px] min-w-[44px]" type="button" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="hidden dark:block"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="block dark:hidden"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg><!----></button><!--]--><!----></nav></div></header><!----> <main id="main-content" tabindex="-1" class="flex-1"><!----><!----> <article class="mx-auto max-w-3xl px-6 py-16 md:py-24"><header class="mb-16"><a href="/blog" class="label mb-8 inline-flex min-h-[44px] items-center gap-2 transition-transform hover:opacity-60"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> Back to blog</a> <h1 class="mb-6">Three layer component architecture</h1> <div class="flex flex-wrap items-center gap-3"><time datetime="2025-12-07T00:00:00.000Z" class="label">7 December 2025</time> <!--[--><span class="text-border">|</span> <!--[--><span class="label">white-paper</span><span class="label">architecture</span><span class="label">accessibility</span><span class="label">documentation</span><!--]--><!--]--></div></header> <div class="prose"><!--[--><!----><h2>Reconciling Accessibility and Aesthetics in Modern UI Design</h2> <p><strong>A Comprehensive White Paper on Eliminating the False Choice Between WCAG Compliance and Visual Excellence</strong></p> <hr/> <p><strong>Author</strong>: Mark Basford <strong>Version</strong>: 1.0 <strong>Date</strong>: December 2025 <strong>Classification</strong>: Public</p> <hr/> <h2>Executive Summary</h2> <p>For over a decade, UI engineers have faced an impossible choice: build accessible interfaces that look chunky and outdated, or create beautiful, modern designs that fail users with disabilities. This trade-off has become so normalised that accessibility is often treated as an afterthought—a compliance checkbox rather than a fundamental design constraint.</p> <p>This white paper introduces the <strong>Three-Layer Component Architecture</strong>, a design pattern that eliminates this false dichotomy by separating interactive, visual, and content concerns into distinct, purpose-built layers. The pattern ensures WCAG 2.2 AAA compliance while enabling complete visual design freedom.</p> <h3>Key Findings from Our Research</h3> <table><thead><tr><th>Metric</th><th>Finding</th><th>Source</th></tr></thead><tbody><tr><td>Website failure rate</td><td><strong>94.8%</strong> of top 1M sites fail accessibility</td><td>WebAIM Million 2025</td></tr><tr><td>Touch error increase</td><td><strong>3x higher</strong> error rates for motor-impaired users on small targets</td><td>PMC Research</td></tr><tr><td>Conversion impact</td><td>Good UI increases conversion by up to <strong>400%</strong></td><td>Forrester Research (2009)</td></tr><tr><td>Legal risk</td><td><strong>2,019 lawsuits</strong> filed in H1 2025 (37% increase)</td><td>EcomBack Report</td></tr><tr><td>Widget failures</td><td><strong>456 lawsuits</strong> targeted sites using accessibility widgets</td><td>2025 Mid-Year Report</td></tr><tr><td>Framework correlation</td><td>React sites average <strong>50+ errors</strong>, Vue.js <strong>62+ errors</strong></td><td>WebAIM Million</td></tr></tbody></table> <p>The Three-Layer Architecture provides a path forward: uncompromising accessibility with unrestricted visual design. It’s not about choosing between users with disabilities and users who appreciate beautiful design—it’s about serving everyone excellently.</p> <hr/> <h2>Table of Contents</h2> <ol><li><a href="#part-i-a-decade-of-failure-the-state-of-web-accessibility-2015-2025">A Decade of Failure: The State of Web Accessibility (2015-2025)</a></li> <li><a href="#part-ii-the-human-cost-understanding-who-were-failing">The Human Cost: Understanding Who We’re Failing</a></li> <li><a href="#part-iii-why-current-solutions-dont-work">Why Current Solutions Don’t Work</a></li> <li><a href="#part-iv-the-business-case-aesthetics-matter-too">The Business Case: Aesthetics Matter Too</a></li> <li><a href="#part-v-introducing-the-three-layer-architecture">Introducing the Three-Layer Architecture</a></li> <li><a href="#part-vi-implementation-guide-building-a-button-component">Implementation Guide: Building a Button Component</a></li> <li><a href="#part-vii-addressing-the-gap-challenge">Addressing the Gap Challenge</a></li> <li><a href="#part-viii-related-approaches-and-prior-art">Related Approaches and Prior Art</a></li> <li><a href="#part-ix-conclusion-and-call-to-action">Conclusion and Call to Action</a></li> <li><a href="#references">References</a></li></ol> <hr/> <h1>Part I: A Decade of Failure: The State of Web Accessibility (2015-2025)</h1> <h2>The Birth of Modern Standards</h2> <p>The journey to our current accessibility crisis began with good intentions. The Web Content Accessibility Guidelines (WCAG) evolved through several major versions, each attempting to address the growing complexity of web applications:</p> <pre class="language-undefined"><!----><code class="language-undefined">Timeline of WCAG Development
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1999        2008        2018        2023        2024        Future
+  │           │           │           │           │           │
+  ▼           ▼           ▼           ▼           ▼           ▼
+┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐
+│WCAG │    │WCAG │    │WCAG │    │WCAG │    │WCAG │    │WCAG │
+│ 1.0 │    │ 2.0 │    │ 2.1 │    │ 2.2 │    │2.2.1│    │ 3.0 │
+└─────┘    └─────┘    └─────┘    └─────┘    └─────┘    └─────┘
+   │           │           │           │           │           │
+   │           │           │           │           │           │
+HTML-      Technology  Mobile &amp;   Focus      Update    Complete
+focused    agnostic    cognitive  indicators            overhaul
+14 guide-  61 success  +17 new    +9 new
+lines      criteria    criteria   criteria</code><!----></pre> <p><strong>WCAG 1.0 (1999)</strong>: Focused primarily on HTML, with 14 guidelines and the A/AA/AAA conformance levels we still use today. This was a web of static pages—JavaScript was primitive, CSS barely existed, and mobile phones couldn’t browse the internet.</p> <p><strong>WCAG 2.0 (2008)</strong>: A decade-long effort produced technology-agnostic guidelines. The four principles—Perceivable, Operable, Understandable, Robust (POUR)—became the foundation. But by 2008, the iPhone had already launched, and the mobile revolution was underway.</p> <p><strong>WCAG 2.1 (2018)</strong>: Finally addressed mobile and cognitive accessibility with 17 new success criteria. Critically, this version introduced <strong>Success Criterion 2.5.5: Target Size (Enhanced)</strong> at Level AAA, requiring 44×44 CSS pixel touch targets. But because it was AAA (not AA), most organisations ignored it.</p> <p><strong>WCAG 2.2 (2023)</strong>: Added 9 new success criteria, including <strong>2.5.8: Target Size (Minimum)</strong> at Level AA, requiring 24×24 CSS pixels. This was progress, but the damage was done—a decade of mobile-first design had normalised tiny touch targets.</p> <h2>The WebAIM Million: Seven Years of Evidence</h2> <p>Since 2019, WebAIM has conducted annual accessibility analyses of the top one million websites. The results are damning:</p> <h3>Error Trends (2019-2025)</h3> <pre class="language-undefined"><!----><code class="language-undefined">Average Accessibility Errors Per Page
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+70 ┤
+   │
+60 ┤ ■ 59.6  ■ 60.9                                ■ 56.8
+   │              ╲                               ╱      ╲
+   │               ╲                             ╱        ╲
+50 ┤                ■ 51.4  ■ 50.8  ■ 50.0  ━━━╱          ■ 51.0
+   │
+   │
+40 ┤
+   │
+30 ┤
+   │
+20 ┤
+   │
+10 ┤
+   │
+ 0 ┼────────────────────────────────────────────────────────────────────
+     2019    2020    2021    2022    2023    2024    2025
+
+Note: 2020 saw a slight INCREASE (60.9) before dramatic improvements in 2021-2023.
+2024 saw a significant spike (56.8 errors) before improving in 2025 (51.0).</code><!----></pre> <h3>WCAG Failure Rates</h3> <table><thead><tr><th>Year</th><th>Failure Rate</th><th>Change</th><th>Errors/Page</th></tr></thead><tbody><tr><td>2019</td><td>97.8%</td><td>Baseline</td><td>59.6</td></tr><tr><td>2020</td><td>98.1%</td><td>+0.3%</td><td>60.9</td></tr><tr><td>2021</td><td>97.4%</td><td>-0.7%</td><td>51.4</td></tr><tr><td>2022</td><td>96.8%</td><td>-0.6%</td><td>50.8</td></tr><tr><td>2023</td><td>96.3%</td><td>-0.5%</td><td>50.0</td></tr><tr><td>2024</td><td>95.9%</td><td>-0.4%</td><td>56.8</td></tr><tr><td>2025</td><td>94.8%</td><td>-1.1%</td><td>51.0</td></tr></tbody></table> <p><strong>In seven years, the failure rate dropped by only 3 percentage points.</strong> At this rate, achieving broad web accessibility would take decades.</p> <h3>Page Complexity Growth</h3> <p>While error rates slowly declined, page complexity exploded:</p> <pre class="language-undefined"><!----><code class="language-undefined">Home Page Elements (Average)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1400 ┤
+     │
+1200 ┤                                                   ■ 1,257 (+61% since 2019)
+     │                                              ╱
+1000 ┤                               ■ 1,050  ■ 1,173
+     │                          ╱
+ 800 ┤        ■ 864  ■ 887  ■ 955
+     │   ╱
+ 600 ┤■ 782
+     │
+ 400 ┤
+     │
+ 200 ┤
+     │
+   0 ┼────────────────────────────────────────────────────────────────────
+       2019   2020   2021   2022   2023   2024   2025
+
+Data: 782 (2019) → 864 (2020) → 887 (2021) → 955 (2022) → 1,050 (2023) → 1,173 (2024) → 1,257 (2025)</code><!----></pre> <p><strong>The web is getting more complex faster than it’s getting more accessible.</strong> Users with disabilities encounter an error approximately once every 24 elements they interact with.</p> <h3>The Six Persistent Failures</h3> <p>The same six error categories have dominated every single year since 2019:</p> <pre class="language-undefined"><!----><code class="language-undefined">Distribution of Accessibility Errors (2025)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Low contrast text          ████████████████████████████████████████ 79.1%
+                           (29.6 instances per page)
+
+Missing alt text           ████████████████████████ 54.5%
+
+Empty links                ██████████████████████ 48.6%
+
+Missing form labels        ████████████████████ 46.1%
+                           (Getting WORSE year-over-year)
+
+Empty buttons              ██████████████████ 43.8%
+                           (Getting WORSE year-over-year)
+
+Missing document language  ████████████████ 37.9%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+These 6 categories account for 96.4% of ALL detected errors</code><!----></pre> <p><strong>Addressing just these six issues would transform web accessibility.</strong> Yet year after year, they persist.</p> <h2>The Framework Factor</h2> <p>Modern JavaScript frameworks correlate with increased accessibility errors:</p> <pre class="language-undefined"><!----><code class="language-undefined">Average Errors by Framework (2025)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+No framework    ████████████████████████████████████████████ ~45 errors
+
+React           ██████████████████████████████████████████████████ 50.1 errors
+
+Vue.js          ████████████████████████████████████████████████████████████ 62.3 errors
+
+Bootstrap       +12.9 additional errors when present
+
+jQuery UI       +15.2 additional errors when present</code><!----></pre> <h3>The ARIA Paradox</h3> <p>Ironically, pages trying harder to be accessible often fail more:</p> <ul><li>ARIA usage has <strong>quadrupled</strong> since 2019 (now 89 ARIA attributes per page on average)</li> <li>Pages with ARIA present average <strong>34.2% more errors</strong> than pages without</li> <li>74.6% of home pages now use ARIA (up from 60.1% in 2019)</li></ul> <p>This isn’t because ARIA is bad—it’s because developers are using it incorrectly, without understanding the underlying accessibility principles.</p> <h2>The Legal Landscape (2024-2025)</h2> <p>The accessibility lawsuit landscape has intensified dramatically:</p> <h3>2024 Full Year Statistics</h3> <table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody><tr><td>Total federal lawsuits</td><td>4,187</td></tr><tr><td>Year-over-year change</td><td>+7%</td></tr><tr><td>Repeat lawsuits (same company sued again)</td><td>41%</td></tr><tr><td>Lawsuits against widget users</td><td>25%+</td></tr><tr><td>Lawsuits since 2018</td><td>25,000+</td></tr></tbody></table> <h3>2025 First Half Statistics (H1 2025)</h3> <table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody><tr><td>Lawsuits filed (Jan-Jun)</td><td>2,019</td></tr><tr><td>Year-over-year increase</td><td><strong>+37%</strong></td></tr><tr><td>Projected full-year total</td><td>~4,975</td></tr><tr><td>E-commerce targets</td><td>69% of cases</td></tr></tbody></table> <h3>Geographic Distribution (2025)</h3> <pre class="language-undefined"><!----><code class="language-undefined">ADA Lawsuit Distribution by State
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+New York        ████████████████████████████████ 31.6% (637 lawsuits)
+
+Florida         ████████████████████████ 24.2% (487 lawsuits, +33% YoY)
+
+California      ███████████████████ 18.9% (380 lawsuits)
+
+Illinois        ████████████ 11.8% (237 lawsuits, +746% YoY!)
+
+Other states    ██████████████ 13.5%</code><!----></pre> <p><strong>Illinois emerged as a new litigation hotspot with a 746% increase</strong>, signalling geographic expansion of accessibility litigation.</p> <h3>The Widget Illusion Shattered</h3> <p>In 2024-2025, the accessibility widget industry faced a reckoning:</p> <ul><li><strong>456 lawsuits</strong> in H1 2025 targeted sites using overlay widgets</li> <li><strong>$1 million FTC settlement</strong> with accessiBe for misleading compliance claims</li> <li><strong>22.6%</strong> of all lawsuits targeted widget-using sites</li> <li>Widgets failed to provide legal protection in <strong>100% of tested cases</strong></li></ul> <p><strong>Accessibility cannot be retrofitted with a JavaScript overlay.</strong> The architecture must be built right from the start.</p> <hr/> <h1>Part II: The Human Cost: Understanding Who We’re Failing</h1> <h2>Global Disability Statistics</h2> <p>The scale of digital exclusion is staggering:</p> <pre class="language-undefined"><!----><code class="language-undefined">Global Disability Population (2025)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+World Population: 8 billion
+                  ████████████████████████████████████████████████████████
+
+People with disabilities: 1.3 billion (16% - 1 in 6 people)
+                          █████████
+
+People with significant functional difficulties: 190-320 million (2-4%)
+                                                 ██</code><!----></pre> <p><strong>One in six people worldwide has a significant disability.</strong> This number is growing due to:</p> <ul><li>Increased longevity (age-related disabilities)</li> <li>Better diagnosis of cognitive conditions</li> <li>Rising rates of chronic conditions</li> <li>Improved survival rates from accidents and illness</li></ul> <h3>Motor Impairment: The Touch Target Crisis</h3> <p>Motor impairments directly impact the ability to interact with touchscreens:</p> <p><strong>Research Findings on Touch Interaction:</strong></p> <table><thead><tr><th>Finding</th><th>Impact</th></tr></thead><tbody><tr><td>Touch error increase</td><td><strong>3x higher</strong> pointing errors vs. mouse</td></tr><tr><td>Gesture completion time</td><td><strong>2x longer</strong> (3.4s vs 1.7s)</td></tr><tr><td>Gesture consistency</td><td><strong>49.7% lower</strong> consistency</td></tr><tr><td>Minimum recommended target</td><td><strong>18mm</strong> (updated from older research)</td></tr></tbody></table> <h3>The Fitts’ Law Problem</h3> <p>Fitts’ Law, a foundational principle of human-computer interaction, states that the time to acquire a target is a function of distance and target size. For touchscreens:</p> <pre class="language-undefined"><!----><code class="language-undefined">Movement Time = a + b × log₂(2D/W)
+
+Where:
+- D = distance to target
+- W = width (size) of target
+- Smaller W = exponentially longer acquisition time</code><!----></pre> <p><strong>Research on older adults and motor-impaired users shows:</strong></p> <ul><li>Error rates converge at <strong>12mm target size</strong> for both able-bodied and impaired users</li> <li>Below 12mm, impaired users experience <strong>disproportionately higher errors</strong></li> <li>Touch input introduces 3D movement complexity not captured by traditional Fitts’ models</li> <li>Right-handed users consistently deviate to the right when tapping</li></ul> <h3>The Smartphone Accessibility Gap</h3> <p>Despite smartphones being essential tools, significant gaps remain:</p> <table><thead><tr><th>Metric</th><th>People with Disabilities</th><th>General Population</th></tr></thead><tbody><tr><td>Smartphone ownership</td><td>72%</td><td>85%+</td></tr><tr><td>Internet access (household)</td><td>59.6%</td><td>90%+</td></tr><tr><td>Computer ownership</td><td>62%</td><td>81%</td></tr></tbody></table> <p><strong>72% of adults with disabilities own smartphones</strong>, but many struggle to use them effectively due to:</p> <ul><li>Small touch targets</li> <li>Complex gesture requirements</li> <li>Lack of customisation options</li> <li>Poor contrast and visibility</li></ul> <h3>Mild-to-Moderate Dexterity: The Invisible Majority</h3> <p>Beyond severe motor impairments lies a larger population:</p> <blockquote><p>“There is a broad group of technology users with less acute motor challenges where touch input is somewhat usable, but smartphone use still causes pain, frustration, embarrassment, and discrimination due to gaps in accessibility.”</p></blockquote> <p>This includes:</p> <ul><li><strong>Temporary conditions</strong>: Broken arm, surgery recovery, holding a baby</li> <li><strong>Situational impairments</strong>: Cold hands, wet fingers, moving vehicle</li> <li><strong>Age-related changes</strong>: Natural decline in fine motor control</li> <li><strong>Fatigue effects</strong>: End-of-day reduced dexterity</li></ul> <p><strong>Dexterity needs vary moment to moment</strong>, even for the same individual. A touch target that works in the morning may fail in the evening when fatigue sets in.</p> <hr/> <h1>Part III: Why Current Solutions Don’t Work</h1> <h2>The Framework Accessibility Problem</h2> <h3>React: Open but Undirected</h3> <p>React’s openness is both strength and weakness:</p> <p><strong>Strengths:</strong></p> <ul><li>Massive accessibility community</li> <li>Libraries like React Aria, Radix UI available</li> <li>Component-based architecture enables consistent patterns</li></ul> <p><strong>Weaknesses:</strong></p> <ul><li>No out-of-the-box accessibility features</li> <li>Documentation scattered and incomplete</li> <li>Developer responsible for all accessibility decisions</li> <li>Easy to create inaccessible patterns accidentally</li></ul> <h3>Angular: Structured but Underdocumented</h3> <p>Angular’s structure should help, but:</p> <p><strong>Strengths:</strong></p> <ul><li>Enforced project structure</li> <li>Angular Material A11y SDK available</li> <li>Modules enforce some coding standards</li></ul> <p><strong>Weaknesses:</strong></p> <ul><li>Accessibility documentation “lacking greatly”</li> <li>Not as many third-party accessibility add-ons</li> <li>A11y SDK coverage is incomplete</li></ul> <h3>Vue: Balanced but Underadopted</h3> <p>Vue offers perhaps the best balance:</p> <p><strong>Strengths:</strong></p> <ul><li>Well-written accessibility documentation</li> <li>Built-in accessibility features</li> <li>Good middle ground between React and Angular</li></ul> <p><strong>Weaknesses:</strong></p> <ul><li>Smaller ecosystem than React</li> <li>Fewer accessibility-focused libraries</li> <li>Still requires developer discipline</li></ul> <h3>The Real Problem</h3> <blockquote><p>“JavaScript frameworks like React, Angular and Vue have a very bad reputation when it comes to web accessibility. But is this due to inherent technical limitations or insurmountable problems of those tools?”</p></blockquote> <p><strong>The answer is neither.</strong> The problem is architectural—frameworks provide building blocks, but don’t enforce accessibility patterns. Developers can build anything, including inaccessible interfaces.</p> <h2>Material Design: The Beautiful Failure</h2> <p>Google’s Material Design is perhaps the most influential design system of the past decade. Yet its accessibility story is complicated:</p> <h3>Touch Target Guidelines</h3> <p>Material Design recommends:</p> <ul><li><strong>48×48 dp</strong> minimum touch target (Android)</li> <li>Visual elements can be smaller (24×24 dp icons common)</li> <li>Padding should extend touch target beyond visual bounds</li></ul> <pre class="language-undefined"><!----><code class="language-undefined">Material Design Touch Target Model
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+            ┌─────────────────────────────────────────┐
+            │                                         │
+            │           48×48 dp touch target         │
+            │                                         │
+            │         ┌─────────────────┐             │
+            │         │                 │             │
+            │         │   24×24 dp      │             │
+            │         │   visual icon   │             │
+            │         │                 │             │
+            │         └─────────────────┘             │
+            │                                         │
+            │                                         │
+            └─────────────────────────────────────────┘
+
+&quot;An icon may appear to be 24×24 dp, but the padding surrounding
+ it comprises the full 48×48 dp touch target.&quot;</code><!----></pre> <p><strong>In theory, this works.</strong> In practice:</p> <h3>The Implementation Gap</h3> <ol><li><strong>Developers misunderstand the model</strong>: They see “24×24 icon” and create 24×24 touch targets</li> <li><strong>Design tools don’t enforce it</strong>: Figma shows visual bounds, not touch targets</li> <li><strong>Code doesn’t enforce it</strong>: CSS doesn’t automatically add touch padding</li> <li><strong>Testing misses it</strong>: Visual tests pass, accessibility tests often absent</li></ol> <h3>Material UI (MUI) Accessibility Issues</h3> <p>Community-reported issues include:</p> <ul><li>Missing form labels in Data Grid dropdowns</li> <li>Broken ARIA references in Tabs component</li> <li>Select component labelling failures</li> <li>Focus management inconsistencies</li></ul> <p><strong>MUI acknowledges</strong>: “The overall accessibility of any project built with [MUI] depends in large part on the author’s markup, additional styling, and scripting they’ve included.”</p> <p>This is the fundamental problem: <strong>accessibility is the developer’s responsibility</strong>, not the framework’s guarantee.</p> <h2>Bootstrap: Colour Contrast Catastrophe</h2> <p>Bootstrap, used by millions of websites, has a documented accessibility problem:</p> <blockquote><p>“Most colors that currently make up Bootstrap’s default palette… lead to insufficient color contrast (below the recommended WCAG 2.0 color contrast ratio of 4.5:1) when used against a light background.”</p></blockquote> <h3>The Default Palette Problem</h3> <p>Bootstrap’s official documentation admits:</p> <ul><li>Default colours fail WCAG contrast requirements</li> <li>Authors must <strong>manually modify</strong> colours for compliance</li> <li>Templates advertising “WCAG 2.0 AA Compliant” often aren’t</li></ul> <p><strong>One analysis of a “compliant” Bootstrap template found:</strong></p> <ul><li>8 WCAG 2.0 AA coding errors</li> <li>16 alerts</li> <li>4 contrast errors</li> <li>On the front page alone</li></ul> <h3>The Evolution (and Its Limits)</h3> <p>Bootstrap has improved over versions:</p> <ul><li>Bootstrap 3.x: Significant accessibility issues</li> <li>Bootstrap 4.x: Some improvements, still colour problems</li> <li>Bootstrap 5.x: Better ARIA support, colour issues persist</li></ul> <p><strong>Bootstrap 5.3 claims</strong>: “It should be perfectly possible to create websites and applications with Bootstrap that fulfill WCAG 2.2 (A/AA/AAA).”</p> <p>Key word: <strong>“possible”</strong>. Not guaranteed. Not default. Possible.</p> <h2>The Headless UI Paradox</h2> <p>Headless UI libraries represent the state of the art in accessibility-aware component design:</p> <h3>What They Get Right</h3> <p><strong>Radix UI:</strong></p> <ul><li>WAI-ARIA compliant components</li> <li>Full keyboard navigation</li> <li>Focus management</li> <li>Screen reader support</li> <li>No styling opinions</li></ul> <p><strong>Headless UI (Tailwind):</strong></p> <ul><li>Unstyled, accessible primitives</li> <li>React and Vue support</li> <li>Seamless Tailwind integration</li></ul> <p><strong>React Aria (Adobe):</strong></p> <ul><li>Industry-leading accessibility</li> <li>30+ language translations</li> <li>13 calendar systems support</li> <li>Comprehensive ARIA implementation</li></ul> <h3>What They Don’t Solve</h3> <p>Despite excellence in behaviour, headless libraries don’t solve the touch target problem:</p> <pre class="language-undefined"><!----><code class="language-undefined">The Headless Library Gap
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Headless libraries provide:
+├── ✓ Keyboard navigation
+├── ✓ Focus management
+├── ✓ ARIA attributes
+├── ✓ Screen reader support
+└── ✓ Behaviour patterns
+
+Headless libraries DON&#39;T provide:
+├── ✗ Touch target sizing
+├── ✗ Visual/interactive layer separation
+├── ✗ Automatic AAA compliance
+└── ✗ Gap/spacing management
+
+The developer still must:
+├── Set appropriate sizes
+├── Manage touch target vs visual size
+├── Ensure contrast ratios
+└── Handle high-contrast modes</code><!----></pre> <p><strong>A headless button is still whatever size the developer makes it.</strong> If the developer wants a 20px compact button, they get a 20px touch target—accessibility failure included.</p> <h2>The Accessibility Widget Disaster</h2> <p>The promise was appealing: add a single JavaScript snippet, and your site becomes accessible. Reality proved different.</p> <h3>The Promise vs. Reality</h3> <p><strong>Widget Companies Claimed:</strong></p> <ul><li>“One line of code for ADA compliance”</li> <li>“AI-powered accessibility”</li> <li>“Automatic WCAG conformance”</li></ul> <p><strong>Reality in 2024-2025:</strong></p> <ul><li>1,000+ widget-using sites sued in 2024</li> <li>456 widget-using sites sued in H1 2025</li> <li>$1M FTC settlement for false claims</li> <li>Zero legal protection demonstrated</li></ul> <h3>Why Widgets Fail</h3> <pre class="language-undefined"><!----><code class="language-undefined">Why Accessibility Widgets Cannot Work
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. OVERLAY APPROACH
+   ┌────────────────────────────────┐
+   │  Original inaccessible site   │ ← Still there
+   ├────────────────────────────────┤
+   │  Widget JavaScript overlay    │ ← Tries to patch
+   └────────────────────────────────┘
+
+   Problems:
+   - Can&#39;t change underlying HTML structure
+   - Can&#39;t fix semantic issues
+   - Can&#39;t add missing alt text accurately
+   - Can&#39;t resize touch targets reliably
+
+2. AI LIMITATIONS
+   - AI can&#39;t determine intent
+   - Alt text generation often wrong
+   - Can&#39;t understand business context
+   - &quot;A button&quot; isn&#39;t helpful
+
+3. USER EXPERIENCE
+   - Adds performance overhead
+   - Creates inconsistent behaviour
+   - Often conflicts with assistive tech
+   - Users report worse experience with widgets</code><!----></pre> <p><strong>You cannot JavaScript your way to accessibility.</strong> It must be built into the architecture.</p> <hr/> <h1>Part IV: The Business Case: Aesthetics Matter Too</h1> <p>Before introducing our solution, we must address a critical concern: <strong>Does accessibility mean sacrificing beautiful design?</strong></p> <p>The research says no—in fact, good design and good accessibility reinforce each other.</p> <h2>The Aesthetic-Usability Effect</h2> <p>In 1995, researchers Masaaki Kurosu and Kaori Kashimura at Hitachi Design Center discovered something remarkable:</p> <blockquote><p>“Users are strongly influenced by the aesthetics of any given interface, even when they try to evaluate the underlying functionality of the system.”</p></blockquote> <p>They tested 26 ATM interface variations with 252 participants and found:</p> <ul><li>Stronger correlation between <strong>aesthetic appeal and perceived usability</strong> than between <strong>aesthetic appeal and actual usability</strong></li> <li>Attractive interfaces were perceived as easier to use, regardless of actual ease</li> <li>First impressions based on aesthetics influenced all subsequent evaluations</li></ul> <h3>The Tolerance Effect</h3> <p>Further research by Tractinsky et al. confirmed:</p> <blockquote><p>“Users are more tolerant of minor usability issues when they find an interface visually appealing.”</p></blockquote> <p>This has profound implications:</p> <ul><li>Beautiful interfaces get better user reviews</li> <li>Users persist longer with attractive designs</li> <li>Minor bugs are forgiven in well-designed products</li> <li>Ugly interfaces are abandoned faster, even if functional</li></ul> <h2>Conversion Rate Impact</h2> <p>The business case for beautiful design is overwhelming:</p> <pre class="language-undefined"><!----><code class="language-undefined">Design Impact on Conversion Rates
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Good UI design alone:      up to 200% increase in conversions
+                           ████████████████████████████████████████
+
+Good UI + Good UX:         up to 400% increase in conversions
+                           ████████████████████████████████████████████████████████████████████████████████
+
+Design improvements only:  35% increase in conversions (Baymard Institute)
+                           ██████████████
+
+Checkout form redesign:    3.6% uplift = €450,000+/year revenue
+(single experiment)        ██</code><!----></pre> <p><em>Note: The 200%/400% figures come from Forrester Research’s 2009 study “Leaving User Experience To Chance Hurts Companies” by Mike Gualtieri. While the specific percentages date from 2009, subsequent research has consistently validated the strong correlation between UX quality and conversion rates.</em></p> <h3>Real-World Case Studies</h3> <table><thead><tr><th>Company</th><th>Change</th><th>Result</th></tr></thead><tbody><tr><td>Walmart</td><td>Mobile UX improvements</td><td><strong>98% increase</strong> in mobile orders</td></tr><tr><td>Buyakilt.com</td><td>Added product filters</td><td><strong>26% increase</strong> in conversions</td></tr><tr><td>Hotel booking site</td><td>UX enhancements</td><td><strong>12.5% increase</strong> in bookings</td></tr></tbody></table> <h3>First Impression Window</h3> <p>Research from Microsoft Research shows:</p> <blockquote><p>“There is a 10-20 second window where a user decides whether a website is worth giving a chance or not.”</p></blockquote> <p>Within <strong>milliseconds</strong>, users form opinions about:</p> <ul><li>Trustworthiness</li> <li>Professionalism</li> <li>Quality</li> <li>Whether to stay or leave</li></ul> <p><strong>Ugly accessible beats beautiful inaccessible</strong>—but <strong>beautiful accessible beats both</strong>.</p> <h2>The False Dichotomy</h2> <p>The industry has created a false choice:</p> <pre class="language-undefined"><!----><code class="language-undefined">The Traditional Trade-off (FALSE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                    Accessibility ◄─────────────────────► Aesthetics
+                         │                                     │
+                         ▼                                     ▼
+                  ┌──────────────┐                     ┌──────────────┐
+                  │   44×44px    │                     │   20×20px    │
+                  │   &quot;chunky&quot;   │                     │   &quot;sleek&quot;    │
+                  │   toggle     │                     │   toggle     │
+                  │              │                     │              │
+                  │   ✓ WCAG     │                     │   ✗ WCAG     │
+                  │   ✗ Modern   │                     │   ✓ Modern   │
+                  └──────────────┘                     └──────────────┘
+
+This is a false choice. The Three-Layer Architecture eliminates it.</code><!----></pre> <p>The Three-Layer Architecture recognises that <strong>what users see</strong> and <strong>what users touch</strong> don’t have to be the same element.</p> <hr/> <h1>Part V: Introducing the Three-Layer Architecture</h1> <h2>The Inspiration: Robert-Houdin’s Mystery Clock</h2> <p>In 1839, French clockmaker Jean-Eugène Robert-Houdin unveiled something that shouldn’t have been possible: a clock with transparent glass faces, no visible gears, no apparent mechanism—yet the hands moved precisely, as if by magic.</p> <p>The secret? A hidden second glass dial positioned behind the visible one, connected by a concealed rod running through the ornate base.</p> <p><strong>The invisible layer did all the work. The visible layer got all the attention.</strong></p> <p>This principle—separating what performs the function from what displays the result—is the foundation of the Three-Layer Architecture.</p> <h2>The Core Insight</h2> <blockquote><p><strong>The thing you touch doesn’t have to be the thing you see.</strong></p></blockquote> <p>Traditional component design conflates three distinct concerns:</p> <ol><li><strong>Interaction</strong>: Receiving clicks, touches, focus, keyboard events</li> <li><strong>Appearance</strong>: Colours, borders, shadows, animations</li> <li><strong>Content</strong>: Text, icons, state indicators</li></ol> <p>The Three-Layer Architecture separates these into purpose-built layers:</p> <pre class="language-undefined"><!----><code class="language-undefined">Three-Layer Component Architecture
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│                          LAYER 1: TOUCH TARGET                          │
+│                                                                         │
+│   • Minimum 44×44 CSS pixels (WCAG 2.2 AAA)                            │
+│   • Completely transparent (invisible to sighted users)                 │
+│   • Receives ALL pointer events (click, touch, hover)                   │
+│   • Contains focus ring for keyboard navigation                         │
+│   • The actual interactive element (button, input, etc.)                │
+│                                                                         │
+│   ┌─────────────────────────────────────────────────────────────────┐   │
+│   │                                                                 │   │
+│   │                    LAYER 2: VISUAL APPEARANCE                   │   │
+│   │                                                                 │   │
+│   │   • Any size the design requires (20px, 24px, 32px, etc.)      │   │
+│   │   • Full theming support (colours, borders, shadows)           │   │
+│   │   • Animation and transition effects                            │   │
+│   │   • Hover and pressed visual states                             │   │
+│   │   • Centred within Layer 1                                      │   │
+│   │   • NO pointer events (pointer-events: none on children)        │   │
+│   │                                                                 │   │
+│   │   ┌─────────────────────────────────────────────────────────┐   │   │
+│   │   │                                                         │   │   │
+│   │   │              LAYER 3: CONTENT &amp; STATE                   │   │   │
+│   │   │                                                         │   │   │
+│   │   │   • Text labels, icons, symbols                         │   │   │
+│   │   │   • State indicators (checked, loading, disabled)       │   │   │
+│   │   │   • Visual effects (ripples, animations)                │   │   │
+│   │   │   • Purely presentational                               │   │   │
+│   │   │                                                         │   │   │
+│   │   └─────────────────────────────────────────────────────────┘   │   │
+│   │                                                                 │   │
+│   └─────────────────────────────────────────────────────────────────┘   │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘</code><!----></pre> <h2>Layer-by-Layer Breakdown</h2> <h3>Layer 1: The Accessibility Layer (Touch Target)</h3> <p><strong>Purpose</strong>: Ensures WCAG 2.2 AAA compliance for all pointer interactions</p> <p><strong>Characteristics</strong>:</p> <ul><li>Always 44×44 CSS pixels minimum (AAA) or 24×24 (AA minimum)</li> <li>Completely transparent—sighted users don’t see it</li> <li>Receives all pointer events</li> <li>Contains the focus ring for keyboard navigation</li> <li>Is the actual semantic element (<code>&lt;button></code>, <code>&lt;input></code>, etc.)</li></ul> <p><strong>Critical Design Decision</strong>: The focus ring belongs on Layer 1, not Layer 2. This ensures:</p> <ul><li>Focus ring is always 44×44px minimum (WCAG 2.4.13)</li> <li>Focus indicator is visible regardless of visual size</li> <li>Consistent focus behaviour across all visual variants</li></ul> <h3>Layer 2: The Visual Layer (Presentation)</h3> <p><strong>Purpose</strong>: Provides the designed appearance without accessibility constraints</p> <p><strong>Characteristics</strong>:</p> <ul><li>Any size the design requires</li> <li>Full theming support</li> <li>Animations and transitions</li> <li>Hover and pressed visual states</li> <li>Centred within Layer 1</li> <li>Typically a <code>&lt;span></code> or <code>&lt;div></code> (non-interactive)</li></ul> <p><strong>Critical Design Decision</strong>: Layer 2 has NO focus styles. Focus is handled by Layer 1.</p> <h3>Layer 3: The Content Layer (State Representation)</h3> <p><strong>Purpose</strong>: Displays content and communicates state visually</p> <p><strong>Characteristics</strong>:</p> <ul><li>Text labels, icons, symbols</li> <li>State indicators (loading spinners, checkmarks, etc.)</li> <li>Visual effects (ripples, animations)</li> <li>Purely presentational—no interactivity</li> <li><code>pointer-events: none</code> to prevent event capture</li></ul> <h2>Visual Comparison: Traditional vs. Three-Layer</h2> <pre class="language-undefined"><!----><code class="language-undefined">Traditional Single-Layer Button
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To meet 44px requirement:
+
+┌──────────────────────────────────────────────┐
+│                                              │  44px
+│              Save Changes                    │  (looks chunky)
+│                                              │
+└──────────────────────────────────────────────┘
+
+OR to look modern:
+
+┌─────────────────────────┐
+│     Save Changes        │  32px (fails WCAG AAA)
+└─────────────────────────┘
+
+
+Three-Layer Architecture
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌──────────────────────────────────────────────┐
+│                                              │
+│        ┌─────────────────────────┐           │  44px touch target
+│        │     Save Changes        │           │  (invisible)
+│        └─────────────────────────┘           │  32px visual
+│                                              │  (looks modern)
+└──────────────────────────────────────────────┘
+
+Result: Looks like 32px. Touches like 44px. Everyone wins.</code><!----></pre> <hr/> <h1>Part VI: Implementation Guide: Building a Button Component</h1> <p>Let’s build a production-ready Button component using the Three-Layer Architecture. This implementation uses React, TypeScript, React Aria, and Class Variance Authority (CVA).</p> <h2>Technology Stack</h2> <table><thead><tr><th>Technology</th><th>Purpose</th></tr></thead><tbody><tr><td>React</td><td>Component framework</td></tr><tr><td>TypeScript</td><td>Type safety</td></tr><tr><td>React Aria</td><td>Accessible primitives</td></tr><tr><td>CVA (Class Variance Authority)</td><td>Variant-based styling</td></tr><tr><td>Tailwind CSS</td><td>Utility classes</td></tr></tbody></table> <h2>Step 1: Define Layer 1 (Touch Target)</h2> <p>Layer 1 is the outermost element—the actual interactive button. It handles:</p> <ul><li>Minimum touch target size (44×44px)</li> <li>Focus ring for keyboard navigation</li> <li>Disabled state styling</li> <li>Pointer event handling</li></ul> <pre class="language-typescript"><!----><code class="language-typescript"><span class="token comment">/**
+ * Layer 1: Transparent outer touch target (44x44px minimum)
+ *
+ * This layer handles the WCAG 2.2 AAA touch target requirement.
+ * It is always transparent and centers the visual button inside.
+ *
+ * IMPORTANT: Focus ring stays on Layer 1 for AAA compliance (2.4.13)
+ */</span>
+<span class="token keyword">const</span> buttonOuterVariants <span class="token operator">=</span> <span class="token function">cva</span><span class="token punctuation">(</span>
+  <span class="token comment">// Base styles - always applied</span>
+  <span class="token punctuation">[</span>
+    <span class="token comment">// Flexbox centering</span>
+    <span class="token string">"inline-flex items-center justify-center"</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// WCAG 2.2 AAA: 44×44px minimum touch target</span>
+    <span class="token string">"min-h-[44px] min-w-[44px]"</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// Focus ring on Layer 1 (not Layer 2!)</span>
+    <span class="token string">"focus-visible:outline-none"</span><span class="token punctuation">,</span>
+    <span class="token string">"focus-visible:ring-2"</span><span class="token punctuation">,</span>
+    <span class="token string">"focus-visible:ring-[var(--ring)]"</span><span class="token punctuation">,</span>
+    <span class="token string">"focus-visible:ring-offset-2"</span><span class="token punctuation">,</span>
+    <span class="token string">"focus-visible:ring-offset-background"</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// Disabled state</span>
+    <span class="token string">"disabled:pointer-events-none"</span><span class="token punctuation">,</span>
+    <span class="token string">"disabled:opacity-50"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span>
+    variants<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// Full width variant</span>
+      fullWidth<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token boolean">true</span><span class="token operator">:</span> <span class="token string">"w-full"</span><span class="token punctuation">,</span>
+        <span class="token boolean">false</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    defaultVariants<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      fullWidth<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code><!----></pre> <h3>Key Design Decisions for Layer 1</h3> <ol><li><p><strong><code>min-h-[44px] min-w-[44px]</code></strong>: Ensures AAA touch target compliance regardless of visual size</p></li> <li><p><strong>Focus ring on Layer 1</strong>: The focus indicator wraps the entire 44×44px target, not just the visual element. This ensures keyboard users always see an adequately-sized focus indicator.</p></li> <li><p><strong>No background colour</strong>: Layer 1 is transparent—it shouldn’t be visible</p></li> <li><p><strong><code>disabled:pointer-events-none</code></strong>: Prevents interaction when disabled</p></li></ol> <h2>Step 2: Define Layer 2 (Visual Appearance)</h2> <p>Layer 2 provides the visual appearance. It can be any size, with any styling:</p> <pre class="language-typescript"><!----><code class="language-typescript"><span class="token comment">/**
+ * Layer 2: Visual button appearance (adjustable size)
+ *
+ * Provides the visual appearance with configurable size.
+ * Can be smaller than touch target for use cases like carousel dots.
+ *
+ * NOTE: NO focus-visible styles here - focus ring is on Layer 1
+ */</span>
+<span class="token keyword">const</span> buttonVisualVariants <span class="token operator">=</span> <span class="token function">cva</span><span class="token punctuation">(</span>
+  <span class="token comment">// Base styles</span>
+  <span class="token punctuation">[</span>
+    <span class="token string">"inline-flex items-center justify-center gap-2"</span><span class="token punctuation">,</span>
+    <span class="token string">"whitespace-nowrap rounded-md"</span><span class="token punctuation">,</span>
+    <span class="token string">"text-sm font-medium"</span><span class="token punctuation">,</span>
+    <span class="token string">"ring-offset-background transition-colors"</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// SVG icons inside button</span>
+    <span class="token string">"[&amp;_svg]:pointer-events-none"</span><span class="token punctuation">,</span>
+    <span class="token string">"[&amp;_svg]:size-4"</span><span class="token punctuation">,</span>
+    <span class="token string">"[&amp;_svg]:shrink-0"</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// For ripple effects</span>
+    <span class="token string">"relative"</span><span class="token punctuation">,</span>
+    <span class="token string">"cursor-pointer"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span>
+    variants<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token comment">// Visual variants (colours, borders)</span>
+      variant<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">default</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"bg-[var(--primary-action)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"text-[var(--primary-action-foreground)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"shadow-md"</span><span class="token punctuation">,</span>
+          <span class="token string">"hover:bg-[var(--primary-action-hover)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"data-[pressed]:bg-[var(--primary-action)]/80"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+        destructive<span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"bg-[var(--destructive-background)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"text-[var(--destructive-foreground)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"shadow-md"</span><span class="token punctuation">,</span>
+          <span class="token string">"hover:bg-[var(--destructive-background)]/90"</span><span class="token punctuation">,</span>
+          <span class="token string">"data-[pressed]:bg-[var(--destructive-background)]/80"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+        outline<span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"border border-[var(--input-border)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"bg-[var(--page-background)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"hover:bg-[var(--input-border)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"data-[pressed]:bg-[var(--input-border)]"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+        secondary<span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"bg-[var(--secondary)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"text-[var(--secondary-foreground)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"shadow-md"</span><span class="token punctuation">,</span>
+          <span class="token string">"hover:bg-[var(--secondary)]/80"</span><span class="token punctuation">,</span>
+          <span class="token string">"data-[pressed]:bg-[var(--secondary)]/70"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+        ghost<span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"hover:bg-[var(--accent)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"hover:text-[var(--accent-foreground)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"data-[pressed]:bg-[var(--accent)]"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+        link<span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token string">"text-[var(--text-link)]"</span><span class="token punctuation">,</span>
+          <span class="token string">"underline-offset-4"</span><span class="token punctuation">,</span>
+          <span class="token string">"hover:underline"</span><span class="token punctuation">,</span>
+          <span class="token string">"data-[pressed]:text-[var(--text-link-hover)]"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+      <span class="token comment">// Visual size (independent of touch target!)</span>
+      visualSize<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">default</span><span class="token operator">:</span> <span class="token string">"h-10 px-4 py-2"</span><span class="token punctuation">,</span>        <span class="token comment">// 40px height</span>
+        sm<span class="token operator">:</span> <span class="token string">"h-9 rounded-md px-3 text-xs"</span><span class="token punctuation">,</span> <span class="token comment">// 36px height</span>
+        lg<span class="token operator">:</span> <span class="token string">"h-11 rounded-md px-8"</span><span class="token punctuation">,</span>        <span class="token comment">// 44px height</span>
+        icon<span class="token operator">:</span> <span class="token string">"h-10 w-10"</span><span class="token punctuation">,</span>                 <span class="token comment">// 40×40px square</span>
+        dot<span class="token operator">:</span> <span class="token string">"h-5 w-5 rounded-full p-0 min-h-0 min-w-0"</span><span class="token punctuation">,</span> <span class="token comment">// 20×20px dot</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+      <span class="token comment">// Full width</span>
+      fullWidth<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token boolean">true</span><span class="token operator">:</span> <span class="token string">"w-full"</span><span class="token punctuation">,</span>
+        <span class="token boolean">false</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    defaultVariants<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      variant<span class="token operator">:</span> <span class="token string">"default"</span><span class="token punctuation">,</span>
+      visualSize<span class="token operator">:</span> <span class="token string">"default"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code><!----></pre> <h3>Key Design Decisions for Layer 2</h3> <ol><li><p><strong><code>visualSize</code> prop</strong>: Explicitly named to indicate it controls ONLY the visual layer, not the touch target</p></li> <li><p><strong><code>dot</code> size</strong>: 20×20px visual inside a 44×44px touch target—perfect for carousel pagination</p></li> <li><p><strong>NO focus styles</strong>: Focus ring is on Layer 1. Layer 2 should never have <code>focus-visible:*</code> classes</p></li> <li><p><strong><code>data-[pressed]</code> instead of <code>:active</code></strong>: React Aria provides <code>isPressed</code> state, which we expose via data attributes for more reliable styling</p></li> <li><p><strong>CSS variables for theming</strong>: <code>var(--primary-action)</code> etc. enable runtime theming</p></li></ol> <h2>Step 3: Define Layer 3 (Content)</h2> <p>Layer 3 elements are nested inside Layer 2:</p> <pre class="language-typescript"><!----><code class="language-typescript"><span class="token comment">// Layer 3 elements are typically inline in the JSX</span>
+<span class="token comment">// But for loading spinners, we can define consistent styles:</span>
+
+<span class="token keyword">const</span> loadingSpinnerStyles <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token string">"motion-safe:animate-spin"</span><span class="token punctuation">,</span>  <span class="token comment">// WCAG 2.3.3: Respect reduced motion</span>
+<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> rippleEffectStyles <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token string">"absolute inset-0"</span><span class="token punctuation">,</span>
+  <span class="token string">"rounded-[inherit]"</span><span class="token punctuation">,</span>
+  <span class="token string">"bg-current opacity-10"</span><span class="token punctuation">,</span>
+  <span class="token string">"motion-safe:animate-in motion-safe:zoom-in-95"</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!----></pre> <h2>Step 4: Compose the Component</h2> <pre class="language-typescript"><!----><code class="language-typescript"><span class="token string">"use client"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> forwardRef<span class="token punctuation">,</span> memo<span class="token punctuation">,</span> useId<span class="token punctuation">,</span> <span class="token keyword">type</span> <span class="token class-name">ReactNode</span> <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span>
+  Button <span class="token keyword">as</span> AriaButton<span class="token punctuation">,</span>
+  <span class="token keyword">type</span> <span class="token class-name">ButtonProps</span> <span class="token keyword">as</span> AriaButtonProps<span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'react-aria-components'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> cva<span class="token punctuation">,</span> <span class="token keyword">type</span> <span class="token class-name">VariantProps</span> <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'class-variance-authority'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Loader2 <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'lucide-react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> cn <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'../../utils/cn'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ... CVA definitions from above ...</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">ButtonProps</span>
+  <span class="token keyword">extends</span> <span class="token class-name">Omit<span class="token operator">&lt;</span>AriaButtonProps<span class="token punctuation">,</span> <span class="token string">'className'</span><span class="token operator">></span></span><span class="token punctuation">,</span>
+    VariantProps<span class="token operator">&lt;</span><span class="token keyword">typeof</span> buttonVisualVariants<span class="token operator">></span> <span class="token punctuation">&#123;</span>
+  loading<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+  loadingText<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  shortcut<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  className<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  buttonVisualClassName<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+  children<span class="token operator">?</span><span class="token operator">:</span> ReactNode<span class="token punctuation">;</span>
+  fullWidth<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/**
+   * Visual size of the button (Layer 2)
+   * The touch target (Layer 1) is ALWAYS 44×44px minimum
+   *
+   * @example
+   * &lt;Button visualSize="dot" /> // 44px touch, 20px visual
+   */</span>
+  visualSize<span class="token operator">?</span><span class="token operator">:</span> <span class="token string">'sm'</span> <span class="token operator">|</span> <span class="token string">'default'</span> <span class="token operator">|</span> <span class="token string">'lg'</span> <span class="token operator">|</span> <span class="token string">'icon'</span> <span class="token operator">|</span> <span class="token string">'dot'</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/**
+ * Button Component - 3-Layer Architecture
+ *
+ * Layer 1: Touch Target (AriaButton) - 44×44px WCAG AAA compliant
+ * Layer 2: Visual Button (span) - configurable appearance
+ * Layer 3: Content (children) - text, icons, effects
+ */</span>
+<span class="token keyword">const</span> Button <span class="token operator">=</span> <span class="token function">memo</span><span class="token punctuation">(</span><span class="token generic-function"><span class="token function">forwardRef</span><span class="token generic class-name"><span class="token operator">&lt;</span>HTMLButtonElement<span class="token punctuation">,</span> ButtonProps<span class="token operator">></span></span></span><span class="token punctuation">(</span>
+  <span class="token punctuation">(</span>
+    <span class="token punctuation">&#123;</span>
+      className<span class="token punctuation">,</span>
+      buttonVisualClassName<span class="token punctuation">,</span>
+      variant<span class="token punctuation">,</span>
+      visualSize <span class="token operator">=</span> <span class="token string">'default'</span><span class="token punctuation">,</span>
+      fullWidth<span class="token punctuation">,</span>
+      loading <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      loadingText <span class="token operator">=</span> <span class="token string">"Loading..."</span><span class="token punctuation">,</span>
+      shortcut<span class="token punctuation">,</span>
+      children<span class="token punctuation">,</span>
+      isDisabled<span class="token punctuation">,</span>
+      <span class="token operator">...</span>props
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    ref
+  <span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Development warning for accessibility</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>
+        <span class="token punctuation">(</span>visualSize <span class="token operator">===</span> <span class="token string">'dot'</span> <span class="token operator">||</span> visualSize <span class="token operator">===</span> <span class="token string">'icon'</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+        <span class="token operator">!</span>props<span class="token punctuation">[</span><span class="token string">'aria-label'</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span>
+        <span class="token operator">!</span>children
+      <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>
+          <span class="token string">'[Button] visualSize="dot" or "icon" requires aria-label '</span> <span class="token operator">+</span>
+          <span class="token string">'when no visible text is provided (WCAG 1.1.1)'</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token comment">// LAYER 1: Touch Target</span>
+      <span class="token operator">&lt;</span>AriaButton
+        ref<span class="token operator">=</span><span class="token punctuation">&#123;</span>ref<span class="token punctuation">&#125;</span>
+        isDisabled<span class="token operator">=</span><span class="token punctuation">&#123;</span>isDisabled <span class="token operator">||</span> loading<span class="token punctuation">&#125;</span>
+        className<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token function">cn</span><span class="token punctuation">(</span><span class="token function">buttonOuterVariants</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> fullWidth <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> className<span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#123;</span><span class="token operator">...</span>props<span class="token punctuation">&#125;</span>
+      <span class="token operator">></span>
+        <span class="token punctuation">&#123;</span><span class="token punctuation">(</span>renderProps<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
+          <span class="token comment">// LAYER 2: Visual Button</span>
+          <span class="token operator">&lt;</span>span
+            className<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token function">cn</span><span class="token punctuation">(</span>
+              <span class="token function">buttonVisualVariants</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+                variant<span class="token punctuation">,</span>
+                visualSize<span class="token punctuation">,</span>
+                fullWidth<span class="token punctuation">,</span>
+              <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              buttonVisualClassName
+            <span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+            data<span class="token operator">-</span>pressed<span class="token operator">=</span><span class="token punctuation">&#123;</span>renderProps<span class="token punctuation">.</span>isPressed <span class="token operator">||</span> <span class="token keyword">undefined</span><span class="token punctuation">&#125;</span>
+          <span class="token operator">></span>
+            <span class="token punctuation">&#123;</span><span class="token comment">/* LAYER 3: Content &amp; Effects */</span><span class="token punctuation">&#125;</span>
+
+            <span class="token punctuation">&#123;</span><span class="token comment">/* Loading state */</span><span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#123;</span>loading <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>
+              <span class="token operator">&lt;</span><span class="token operator">></span>
+                <span class="token operator">&lt;</span>Loader2
+                  className<span class="token operator">=</span><span class="token string">"motion-safe:animate-spin"</span>
+                  aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">"true"</span>
+                <span class="token operator">/</span><span class="token operator">></span>
+                <span class="token operator">&lt;</span>span className<span class="token operator">=</span><span class="token string">"sr-only"</span> aria<span class="token operator">-</span>live<span class="token operator">=</span><span class="token string">"polite"</span><span class="token operator">></span>
+                  <span class="token punctuation">&#123;</span>loadingText<span class="token punctuation">&#125;</span>
+                <span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span>
+              <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">></span>
+            <span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+
+            <span class="token punctuation">&#123;</span><span class="token comment">/* Normal content */</span><span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#123;</span><span class="token operator">!</span>loading <span class="token operator">&amp;&amp;</span> children<span class="token punctuation">&#125;</span>
+
+            <span class="token punctuation">&#123;</span><span class="token comment">/* Keyboard shortcut hint (visible on focus) */</span><span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#123;</span>renderProps<span class="token punctuation">.</span>isFocusVisible <span class="token operator">&amp;&amp;</span> shortcut <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>
+              <span class="token operator">&lt;</span>kbd className<span class="token operator">=</span><span class="token string">"ml-auto hidden text-xs opacity-60 lg:inline"</span><span class="token operator">></span>
+                <span class="token punctuation">&#123;</span>shortcut<span class="token punctuation">&#125;</span>
+              <span class="token operator">&lt;</span><span class="token operator">/</span>kbd<span class="token operator">></span>
+            <span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+
+            <span class="token punctuation">&#123;</span><span class="token comment">/* Press ripple effect */</span><span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#123;</span>renderProps<span class="token punctuation">.</span>isPressed <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>
+              <span class="token operator">&lt;</span>span
+                className<span class="token operator">=</span>"absolute inset<span class="token operator">-</span><span class="token number">0</span> rounded<span class="token operator">-</span><span class="token punctuation">[</span>inherit<span class="token punctuation">]</span> bg<span class="token operator">-</span>current
+                           opacity<span class="token operator">-</span><span class="token number">10</span> motion<span class="token operator">-</span>safe<span class="token operator">:</span>animate<span class="token operator">-</span><span class="token keyword">in</span>
+                           motion<span class="token operator">-</span>safe<span class="token operator">:</span>zoom<span class="token operator">-</span><span class="token keyword">in</span><span class="token operator">-</span><span class="token number">95</span>"
+                aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">"true"</span>
+              <span class="token operator">/</span><span class="token operator">></span>
+            <span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+          <span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">></span>
+        <span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>AriaButton<span class="token operator">></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Button<span class="token punctuation">.</span>displayName <span class="token operator">=</span> <span class="token string">"Button"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token punctuation">&#123;</span> Button<span class="token punctuation">,</span> buttonOuterVariants<span class="token punctuation">,</span> buttonVisualVariants <span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code><!----></pre> <h2>Step 5: Usage Examples</h2> <h3>Standard Buttons</h3> <pre class="language-tsx"><!----><code class="language-tsx"><span class="token comment">// Default button - 40px visual, 44px touch</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">Save Changes</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span>
+
+<span class="token comment">// Small button - 36px visual, 44px touch</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">visualSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sm<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">Cancel</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span>
+
+<span class="token comment">// Large button - 44px visual, 44px touch</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">visualSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>lg<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">Submit Application</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span></code><!----></pre> <h3>Icon Buttons</h3> <pre class="language-tsx"><!----><code class="language-tsx"><span class="token comment">// Icon button - 40px visual, 44px touch</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">visualSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>icon<span class="token punctuation">"</span></span> <span class="token attr-name">aria-label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Settings<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">SettingsIcon</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span>
+
+<span class="token comment">// Tiny icon - requires aria-label!</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">visualSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>icon<span class="token punctuation">"</span></span> <span class="token attr-name">aria-label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Close dialog<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">XIcon</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>h-4 w-4<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span></code><!----></pre> <h3>Carousel Dots</h3> <pre class="language-tsx"><!----><code class="language-tsx"><span class="token comment">// Carousel pagination - 20px visual, 44px touch</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>flex gap-0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token punctuation">&#123;</span>slides<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>_<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span>
+      <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>index<span class="token punctuation">&#125;</span></span>
+      <span class="token attr-name">visualSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dot<span class="token punctuation">"</span></span>
+      <span class="token attr-name">aria-label</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span><span class="token template-string"><span class="token template-punctuation string">&#96;</span><span class="token string">Go to slide </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">&#96;</span></span><span class="token punctuation">&#125;</span></span>
+      <span class="token attr-name">variant</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">&#123;</span>currentSlide <span class="token operator">===</span> index <span class="token operator">?</span> <span class="token string">"default"</span> <span class="token operator">:</span> <span class="token string">"ghost"</span><span class="token punctuation">&#125;</span></span>
+    <span class="token punctuation">/></span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code><!----></pre> <h3>Loading States</h3> <pre class="language-tsx"><!----><code class="language-tsx"><span class="token comment">// Loading with screen reader announcement</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">loading</span> <span class="token attr-name">loadingText</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Saving your changes...<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  Save
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span></code><!----></pre> <h2>Testing the Three-Layer Architecture</h2> <h3>Unit Tests</h3> <pre class="language-typescript"><!----><code class="language-typescript"><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'3-Layer Architecture'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'Layer Structure'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'renders outer touch target element (Layer 1)'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Button<span class="token operator">></span>Test<span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>tagName<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBe</span><span class="token punctuation">(</span><span class="token string">'BUTTON'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'renders inner visual span element (Layer 2)'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Button<span class="token operator">></span>Test<span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> visualLayer <span class="token operator">=</span> button<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'span'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>visualLayer<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBeInTheDocument</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'touch target has WCAG-compliant minimum size classes'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Button<span class="token operator">></span>Test<span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'min-h-[44px]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'min-w-[44px]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'visual layer receives variant styling'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Button variant<span class="token operator">=</span><span class="token string">"destructive"</span><span class="token operator">></span>Test<span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> visualLayer <span class="token operator">=</span> button<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'span'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>visualLayer<span class="token operator">?.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'bg-[var(--destructive)]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'Visual Size Independence'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'visualSize="dot" renders small visual inside large touch target'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Button visualSize<span class="token operator">=</span><span class="token string">"dot"</span> aria<span class="token operator">-</span>label<span class="token operator">=</span><span class="token string">"Dot"</span><span class="token operator">></span><span class="token punctuation">.</span><span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> visualLayer <span class="token operator">=</span> button<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'span'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment">// Touch target: 44px minimum</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'min-h-[44px]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'min-w-[44px]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment">// Visual layer: 20px</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>visualLayer<span class="token operator">?.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'h-5'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>visualLayer<span class="token operator">?.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'w-5'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'touch target size unchanged regardless of visualSize'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> rerender <span class="token punctuation">&#125;</span> <span class="token operator">=</span> <span class="token function">render</span><span class="token punctuation">(</span>
+        <span class="token operator">&lt;</span>Button visualSize<span class="token operator">=</span><span class="token string">"dot"</span> aria<span class="token operator">-</span>label<span class="token operator">=</span><span class="token string">"Dot"</span> <span class="token operator">/</span><span class="token operator">></span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">let</span> button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'min-h-[44px]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token function">rerender</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Button visualSize<span class="token operator">=</span><span class="token string">"lg"</span><span class="token operator">></span>Large<span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'min-h-[44px]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'Focus Ring Location'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'focus ring is on Layer 1 (AriaButton), not Layer 2'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span>Button<span class="token operator">></span>Test<span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> button <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token function">getByRole</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> visualLayer <span class="token operator">=</span> button<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'span'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment">// Focus ring on button</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>button<span class="token punctuation">.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'focus-visible:ring-2'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment">// NOT on visual layer</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>visualLayer<span class="token operator">?.</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span>not<span class="token punctuation">.</span><span class="token function">toContain</span><span class="token punctuation">(</span><span class="token string">'focus-visible:ring'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!----></pre> <h3>Visual Regression Tests</h3> <pre class="language-typescript"><!----><code class="language-typescript"><span class="token comment">// Verify visual appearance at different sizes</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token string">'button visual sizes'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> page <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token function">goto</span><span class="token punctuation">(</span><span class="token string">'/storybook?id=button--all-sizes'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Screenshot each variant</span>
+  <span class="token keyword">await</span> <span class="token function">expect</span><span class="token punctuation">(</span>page<span class="token punctuation">.</span><span class="token function">locator</span><span class="token punctuation">(</span><span class="token string">'.button-sm'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveScreenshot</span><span class="token punctuation">(</span><span class="token string">'button-sm.png'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">await</span> <span class="token function">expect</span><span class="token punctuation">(</span>page<span class="token punctuation">.</span><span class="token function">locator</span><span class="token punctuation">(</span><span class="token string">'.button-default'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveScreenshot</span><span class="token punctuation">(</span><span class="token string">'button-default.png'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">await</span> <span class="token function">expect</span><span class="token punctuation">(</span>page<span class="token punctuation">.</span><span class="token function">locator</span><span class="token punctuation">(</span><span class="token string">'.button-lg'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveScreenshot</span><span class="token punctuation">(</span><span class="token string">'button-lg.png'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">await</span> <span class="token function">expect</span><span class="token punctuation">(</span>page<span class="token punctuation">.</span><span class="token function">locator</span><span class="token punctuation">(</span><span class="token string">'.button-dot'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveScreenshot</span><span class="token punctuation">(</span><span class="token string">'button-dot.png'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Verify touch target is 44px regardless of visual</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token string">'touch targets meet WCAG AAA'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> page <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token function">goto</span><span class="token punctuation">(</span><span class="token string">'/storybook?id=button--dot-size'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> button <span class="token operator">=</span> page<span class="token punctuation">.</span><span class="token function">locator</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> box <span class="token operator">=</span> <span class="token keyword">await</span> button<span class="token punctuation">.</span><span class="token function">boundingBox</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">expect</span><span class="token punctuation">(</span>box<span class="token operator">?.</span>width<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBeGreaterThanOrEqual</span><span class="token punctuation">(</span><span class="token number">44</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">expect</span><span class="token punctuation">(</span>box<span class="token operator">?.</span>height<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBeGreaterThanOrEqual</span><span class="token punctuation">(</span><span class="token number">44</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!----></pre> <h3>Accessibility Audits</h3> <pre class="language-typescript"><!----><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> axe<span class="token punctuation">,</span> toHaveNoViolations <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'jest-axe'</span><span class="token punctuation">;</span>
+expect<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span>toHaveNoViolations<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'Accessibility'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> visualSizes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'sm'</span><span class="token punctuation">,</span> <span class="token string">'default'</span><span class="token punctuation">,</span> <span class="token string">'lg'</span><span class="token punctuation">,</span> <span class="token string">'icon'</span><span class="token punctuation">,</span> <span class="token string">'dot'</span><span class="token punctuation">]</span> <span class="token keyword">as</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+
+  visualSizes<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>visualSize<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">&#96;</span><span class="token string">has no axe violations for visualSize="</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>visualSize<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">"</span><span class="token template-punctuation string">&#96;</span></span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> container <span class="token punctuation">&#125;</span> <span class="token operator">=</span> <span class="token function">render</span><span class="token punctuation">(</span>
+        <span class="token operator">&lt;</span>Button
+          visualSize<span class="token operator">=</span><span class="token punctuation">&#123;</span>visualSize<span class="token punctuation">&#125;</span>
+          aria<span class="token operator">-</span>label<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token template-string"><span class="token template-punctuation string">&#96;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>visualSize<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string"> button</span><span class="token template-punctuation string">&#96;</span></span><span class="token punctuation">&#125;</span>
+        <span class="token operator">></span>
+          <span class="token punctuation">&#123;</span>visualSize <span class="token operator">!==</span> <span class="token string">'dot'</span> <span class="token operator">&amp;&amp;</span> visualSize <span class="token operator">!==</span> <span class="token string">'icon'</span> <span class="token operator">?</span> <span class="token string">'Text'</span> <span class="token operator">:</span> <span class="token keyword">undefined</span><span class="token punctuation">&#125;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> results <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">axe</span><span class="token punctuation">(</span>container<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">expect</span><span class="token punctuation">(</span>results<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toHaveNoViolations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!----></pre> <hr/> <h1>Part VII: Addressing the Gap Challenge</h1> <h2>The Spacing Problem</h2> <p>The Three-Layer Architecture has one significant trade-off: <strong>increased effective spacing between components</strong>.</p> <pre class="language-undefined"><!----><code class="language-undefined">The Gap Challenge Illustrated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Traditional 32px buttons with 8px gap:
+
+┌────────────────┐ 8px ┌────────────────┐
+│     Button     │◄───►│     Button     │
+└────────────────┘     └────────────────┘
+        32px                  32px
+
+Three-Layer with 32px visual, 44px touch, 8px gap:
+
+┌───────────────────────────┐ 8px ┌───────────────────────────┐
+│                           │◄───►│                           │
+│   ┌────────────────┐      │     │      ┌────────────────┐   │
+│   │     Button     │      │     │      │     Button     │   │
+│   └────────────────┘      │     │      └────────────────┘   │
+│                           │     │                           │
+└───────────────────────────┘     └───────────────────────────┘
+          44px                              44px
+
+Visual gap appears to be: 8px + 6px + 6px = 20px
+(44-32)/2 = 6px of transparent space on each side</code><!----></pre> <p>This can make densely-packed UIs feel more spacious than intended.</p> <h2>Anti-Pattern: Overlapping Touch Targets with Z-Index</h2> <p>⚠️ <strong>DO NOT USE THIS APPROACH</strong></p> <p>A tempting but fundamentally flawed “solution” is to allow touch targets to overlap and use z-index to determine which element receives the tap:</p> <pre class="language-tsx"><!----><code class="language-tsx"><span class="token comment">// ❌ BAD - DO NOT DO THIS</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>flex<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token punctuation">&#123;</span><span class="token comment">/* Touch targets overlap, z-index determines winner */</span><span class="token punctuation">&#125;</span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>z-10<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">Previous</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>z-20<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">1</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>z-30<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">2</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">  </span><span class="token punctuation">&#123;</span><span class="token comment">/* Steals adjacent touch areas */</span><span class="token punctuation">&#125;</span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>z-20<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">3</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>z-10<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token plain-text">Next</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code><!----></pre> <pre class="language-undefined"><!----><code class="language-undefined">Why Overlapping Touch Targets FAIL Users
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Visual appearance (what users see):
+
+┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐
+│  &lt;   │ │  1   │ │  2   │ │  3   │ │  &gt;   │
+└──────┘ └──────┘ └──────┘ └──────┘ └──────┘
+
+What ACTUALLY happens when a motor-impaired user taps:
+
+┌──────────────────────────────────────────────────────────────────────┐
+│  User aims │ User aims │ User aims │ User aims │ User aims           │
+│  for &quot;&lt;&quot;   │ for &quot;1&quot;   │ for &quot;2&quot;   │ for &quot;3&quot;   │ for &quot;&gt;&quot;             │
+│     ↓      │     ↓     │     ↓     │     ↓     │     ↓               │
+│  Gets &quot;1&quot;! │ Gets &quot;2&quot;! │ Gets &quot;2&quot;  │ Gets &quot;2&quot;! │ Gets &quot;3&quot;!           │
+│  (WRONG)   │ (WRONG)   │ (correct) │ (WRONG)   │ (WRONG)             │
+└──────────────────────────────────────────────────────────────────────┘
+
+Higher z-index elements STEAL touches intended for adjacent elements.</code><!----></pre> <h2>Anti-Pattern: Negative Margins</h2> <p>⚠️ <strong>DO NOT USE THIS APPROACH</strong></p> <p>Using negative margins to pull touch targets closer creates the same problem as overlapping with z-index:</p> <pre class="language-css"><!----><code class="language-css"><span class="token comment">/* ❌ BAD - DO NOT DO THIS */</span>
+<span class="token selector">.button-group .button-layer-1</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">/* Pull adjacent touch targets closer */</span>
+  <span class="token property">margin-left</span><span class="token punctuation">:</span> -6px<span class="token punctuation">;</span>
+  <span class="token property">margin-right</span><span class="token punctuation">:</span> -6px<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code><!----></pre> <h3>Why These Are Harmful</h3> <ol><li><p><strong>Defeats the purpose</strong>: The whole point of 44px touch targets is to give users room for error. Overlapping means taps intended for one element activate another.</p></li> <li><p><strong>Punishes the users we’re trying to help</strong>: Motor-impaired users who need larger touch targets will experience MORE errors, not fewer.</p></li> <li><p><strong>Creates invisible interaction zones</strong>: Users have no way to know where one touch target ends and another begins.</p></li> <li><p><strong>Technical compliance ≠ usability</strong>: You might pass an automated audit, but you’ve made the interface actively worse for users with disabilities.</p></li></ol> <p><strong>The gap is the feature, not the problem.</strong> If your design can’t accommodate proper touch target spacing, redesign—don’t compromise accessibility.</p> <hr/> <h2>Anti-Pattern: Shared Touch Targets</h2> <p>⚠️ <strong>DO NOT USE THIS APPROACH</strong></p> <p>Another tempting “solution” is to wrap multiple controls in a single touch target container:</p> <pre class="language-tsx"><!----><code class="language-tsx"><span class="token comment">// ❌ BAD - DO NOT DO THIS</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>
+  <span class="token attr-name">role</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>group<span class="token punctuation">"</span></span>
+  <span class="token attr-name">aria-label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Quantity<span class="token punctuation">"</span></span>
+  <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>inline-flex min-h-[44px] items-center border rounded-md<span class="token punctuation">"</span></span>
+<span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span>
+    <span class="token attr-name">aria-label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Decrease quantity<span class="token punctuation">"</span></span>
+    <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>h-8 w-8 flex items-center justify-center<span class="token punctuation">"</span></span>  <span class="token comment">// Too small!</span>
+  <span class="token punctuation">></span></span><span class="token plain-text">
+    -
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>w-12 text-center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token punctuation">&#123;</span>quantity<span class="token punctuation">&#125;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span>
+    <span class="token attr-name">aria-label</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Increase quantity<span class="token punctuation">"</span></span>
+    <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>h-8 w-8 flex items-center justify-center<span class="token punctuation">"</span></span>  <span class="token comment">// Too small!</span>
+  <span class="token punctuation">></span></span><span class="token plain-text">
+    +
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code><!----></pre> <h3>Why This Is Harmful</h3> <ol><li><p><strong>Breaks keyboard navigation</strong>: Each interactive control needs its own focusable element. Users can’t tab to individual buttons inside a shared target.</p></li> <li><p><strong>Confuses screen readers</strong>: The relationship between the group container and child buttons creates ambiguous semantics. Screen readers may announce the group but not properly convey the individual controls.</p></li> <li><p><strong>Individual buttons still have small touch targets</strong>: The 44px container doesn’t magically make the 32px buttons inside easier to tap. Users still need to hit the small visual button.</p></li> <li><p><strong>Focus ring is on wrong element</strong>: The focus indicator appears on the container, not on the actual button being activated.</p></li></ol> <p><strong>Each interactive element needs its own 44px touch target.</strong> There are no shortcuts.</p> <hr/> <h2>Anti-Pattern: Responsive Touch Targets</h2> <p>⚠️ <strong>DO NOT USE THIS APPROACH</strong></p> <p>It’s tempting to reduce touch target sizes for “precise” input devices:</p> <pre class="language-css"><!----><code class="language-css"><span class="token comment">/* ❌ BAD - DO NOT DO THIS */</span>
+<span class="token comment">/* Base: Mobile-first, large touch targets */</span>
+<span class="token selector">.button-layer-1</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">min-height</span><span class="token punctuation">:</span> 44px<span class="token punctuation">;</span>
+  <span class="token property">min-width</span><span class="token punctuation">:</span> 44px<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* "Enhancement": Smaller for precise pointers */</span>
+<span class="token atrule"><span class="token rule">@media</span> <span class="token punctuation">(</span><span class="token property">pointer</span><span class="token punctuation">:</span> fine<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token punctuation">(</span><span class="token property">hover</span><span class="token punctuation">:</span> hover<span class="token punctuation">)</span></span> <span class="token punctuation">&#123;</span>
+  <span class="token selector">.button-layer-1--responsive</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">min-height</span><span class="token punctuation">:</span> 32px<span class="token punctuation">;</span>  <span class="token comment">/* Assumes precision = ability */</span>
+    <span class="token property">min-width</span><span class="token punctuation">:</span> 32px<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code><!----></pre> <h3>Why This Is Harmful</h3> <ol><li><p><strong><code>pointer: fine</code> doesn’t mean “user has fine motor control”</strong>: It means the device has a precise pointing mechanism. A mouse is “fine” even when the user has tremors, arthritis, or other motor impairments.</p></li> <li><p><strong>Punishes desktop users with disabilities</strong>: Many people with motor impairments use desktop computers with mice. They need large touch targets MORE than mobile users, not less.</p></li> <li><p><strong>False assumptions about input methods</strong>:</p> <ul><li>Trackpads detect as <code>pointer: fine</code> but are harder to use precisely</li> <li>Styluses detect as <code>pointer: fine</code> but users may have shaky hands</li> <li>Touch-capable laptops can switch between touch and trackpad mid-session</li></ul></li> <li><p><strong>Violates the principle of progressive enhancement</strong>: Accessibility should be the baseline, not something that gets removed based on device capabilities.</p></li></ol> <p><strong>The 44px minimum applies to ALL input methods.</strong> Device precision ≠ user precision.</p> <hr/> <h2>Mitigation Strategy 1: Grid-Aware Spacing</h2> <p>Design your grid system to account for touch targets:</p> <pre class="language-css"><!----><code class="language-css"><span class="token comment">/* Grid cells sized to touch target */</span>
+<span class="token selector">.toolbar-grid</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> grid<span class="token punctuation">;</span>
+  <span class="token property">grid-template-columns</span><span class="token punctuation">:</span> <span class="token function">repeat</span><span class="token punctuation">(</span>auto-fit<span class="token punctuation">,</span> 44px<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">gap</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>  <span class="token comment">/* Touch targets are adjacent */</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">.toolbar-button-visual</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">/* Visual centered in 44px cell */</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 32px<span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 32px<span class="token punctuation">;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> auto<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code><!----></pre> <pre class="language-undefined"><!----><code class="language-undefined">Grid-Aware Layout
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Grid cells (44px each, no gap):
+
+┌────────────┬────────────┬────────────┬────────────┐
+│            │            │            │            │
+│   ┌────┐   │   ┌────┐   │   ┌────┐   │   ┌────┐   │
+│   │Icon│   │   │Icon│   │   │Icon│   │   │Icon│   │
+│   └────┘   │   └────┘   │   └────┘   │   └────┘   │
+│            │            │            │            │
+└────────────┴────────────┴────────────┴────────────┘
+    44px         44px         44px         44px
+
+Visuals (32px) appear to have 12px gaps.
+Touch targets (44px) are adjacent with no gaps.</code><!----></pre> <h3>Why This Is Harmful</h3> <ol><li><p><strong>Creates overlapping touch targets</strong>: Negative margins cause touch targets to overlap, meaning taps near the boundary activate the wrong element.</p></li> <li><p><strong>Same result as z-index overlap</strong>: Whether you overlap via z-index stacking or negative margins, the outcome is identical—users who need the 44px target area will hit adjacent elements.</p></li> <li><p><strong>Unpredictable hit areas</strong>: The actual tappable region becomes smaller than the visual 44px, defeating the purpose of the Three-Layer Architecture entirely.</p></li> <li><p><strong>“Just a little overlap” is still harmful</strong>: Even 6px of overlap means the effective touch target is reduced by 12px (6px stolen from each side). A 44px target becomes 32px—back to failing WCAG AAA.</p></li></ol> <p><strong>If touch targets need to be adjacent, use grid-aware spacing with <code>gap: 0</code>.</strong> Never use negative margins to artificially compress spacing.</p> <h2>When Extra Spacing is Actually Good</h2> <p>In many contexts, the extra spacing is beneficial—and trying to eliminate it is solving a problem that doesn’t exist:</p> <table><thead><tr><th>Context</th><th>Why Extra Space Helps</th></tr></thead><tbody><tr><td>Mobile interfaces</td><td>Fat-finger-friendly, reduces mis-taps</td></tr><tr><td>Primary CTAs</td><td>Draws attention, creates visual hierarchy</td></tr><tr><td>Form controls</td><td>Breathing room improves scannability</td></tr><tr><td>All interfaces</td><td>Reduces cognitive load and visual clutter</td></tr><tr><td>Error-prone actions</td><td>Prevents accidental destructive clicks</td></tr></tbody></table> <p><strong>The “gap problem” is often imaginary.</strong> Before trying to eliminate spacing:</p> <ol><li><p><strong>Question the design requirement</strong>: Does the UI actually need to be denser? Compact designs often harm usability for everyone, not just users with disabilities.</p></li> <li><p><strong>Test with real users</strong>: Users with motor impairments consistently prefer more spacing, even when it makes the interface look “less modern.”</p></li> <li><p><strong>Consider the trade-offs</strong>: Every mitigation strategy has costs. Sometimes the cleanest solution is to accept the 44px spacing as a feature.</p></li></ol> <p><strong>Scenarios where you might genuinely need denser layouts:</strong></p> <ul><li>Dense data tables (but consider if the table design itself is the problem)</li> <li>Compact toolbars (but could these be redesigned with fewer icons?)</li> <li>Pagination/carousel dots (but use the Three-Layer Architecture—don’t shrink touch targets)</li> <li>Icon-only navigation (but should this be icon-only?)</li></ul> <p>For these specific cases, use the mitigation strategies above.</p> <hr/> <h1>Part VIII: Related Approaches and Prior Art</h1> <h2>React Aria’s Architecture</h2> <p>Adobe’s React Spectrum project pioneered the separation of concerns in accessible components:</p> <pre class="language-undefined"><!----><code class="language-undefined">React Aria&#39;s Three-Part Architecture
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│  STATE HOOK            BEHAVIOUR HOOK           RENDERED COMPONENT      │
+│  (useButtonState)      (useButton)              (&lt;Button&gt;)              │
+│                                                                         │
+│  ┌─────────────┐      ┌─────────────────┐      ┌─────────────────────┐  │
+│  │ Core logic  │      │ Event handling  │      │ DOM structure       │  │
+│  │ Platform-   │ ───► │ Accessibility   │ ───► │ Styling             │  │
+│  │ independent │      │ i18n            │      │ Composition         │  │
+│  └─────────────┘      └─────────────────┘      └─────────────────────┘  │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘</code><!----></pre> <p><strong>How it differs from Three-Layer:</strong></p> <ul><li>React Aria separates <strong>behavioural concerns</strong> (state, events, accessibility)</li> <li>Three-Layer separates <strong>spatial concerns</strong> (touch target, visual, content)</li> <li>They’re complementary—Three-Layer uses React Aria for Layer 1’s behaviour</li></ul> <h2>Headless UI Libraries</h2> <p>Radix UI, Headless UI, and similar libraries separate behaviour from styling:</p> <pre class="language-undefined"><!----><code class="language-undefined">Headless Library Separation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│        HEADLESS LIBRARY                    DEVELOPER STYLING            │
+│                                                                         │
+│  ┌─────────────────────────────┐      ┌─────────────────────────────┐  │
+│  │ Focus management            │      │ Colours                     │  │
+│  │ Keyboard navigation         │      │ Borders                     │  │
+│  │ ARIA attributes             │      │ Shadows                     │  │
+│  │ Screen reader support       │ ───► │ Typography                  │  │
+│  │ Portal rendering            │      │ Animations                  │  │
+│  │ Click outside detection     │      │ Size (!!!)                  │  │
+│  └─────────────────────────────┘      └─────────────────────────────┘  │
+│                                                                         │
+│  Note: Size is developer&#39;s responsibility!                              │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘</code><!----></pre> <p><strong>The Gap</strong>: Headless libraries don’t enforce touch target sizing. Three-Layer fills this gap.</p> <h2>Vue Renderless Components</h2> <p>Vue’s renderless component pattern provides behaviour without presentation:</p> <pre class="language-vue"><!----><code class="language-vue">&lt;!-- Renderless toggle providing only behaviour --&gt;
+&lt;Toggle v-slot=&quot;&#123; isOn, toggle &#125;&quot;&gt;
+  &lt;!-- Developer provides all visuals --&gt;
+  &lt;button @click=&quot;toggle&quot; :class=&quot;isOn ? &#39;bg-green-500&#39; : &#39;bg-gray-200&#39;&quot;&gt;
+    &#123;&#123; isOn ? &#39;On&#39; : &#39;Off&#39; &#125;&#125;
+  &lt;/button&gt;
+&lt;/Toggle&gt;</code><!----></pre> <p><strong>Similarity</strong>: Separates behaviour from visuals <strong>Difference</strong>: Doesn’t address touch target sizing</p> <h2>Android Jetpack Compose</h2> <p>Compose automatically expands touch targets:</p> <blockquote><p>“Even when the visible touch target size of an interactive composable is smaller than Material Design’s minimum size, Jetpack Compose will also automatically apply an invisible touch target size region around such a composable so that its touch target size is at least 48dp by 48dp.”</p></blockquote> <p><strong>This is Three-Layer at the framework level!</strong> But:</p> <ul><li>Only available on Android</li> <li>Developers don’t have explicit control</li> <li>Can cause unexpected spacing issues</li></ul> <h2>CSS Pseudo-Element Pattern</h2> <p>A common CSS technique uses <code>::before</code> or <code>::after</code> for touch expansion:</p> <pre class="language-css"><!----><code class="language-css"><span class="token selector">.small-icon-button</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 24px<span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 24px<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token selector">.small-icon-button::before</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">;</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
+  <span class="token property">top</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+  <span class="token property">left</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+  <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">translate</span><span class="token punctuation">(</span>-50%<span class="token punctuation">,</span> -50%<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 44px<span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 44px<span class="token punctuation">;</span>
+  <span class="token comment">/* Invisible but clickable */</span>
+<span class="token punctuation">&#125;</span></code><!----></pre> <p><strong>Limitations:</strong></p> <ul><li>Single pseudo-element limits other uses</li> <li>Doesn’t work well with focus rings</li> <li>No framework-level guarantees</li></ul> <h2>Comparison Table</h2> <table><thead><tr><th>Approach</th><th>Behaviour</th><th>Styling</th><th>Touch Target</th><th>Focus Ring</th></tr></thead><tbody><tr><td>Material UI</td><td>Integrated</td><td>Integrated</td><td>Padding-based</td><td>On element</td></tr><tr><td>Headless UI</td><td>Separated</td><td>Developer</td><td>Developer</td><td>Developer</td></tr><tr><td>React Aria</td><td>Separated</td><td>Developer</td><td>Developer</td><td>Developer</td></tr><tr><td>Jetpack Compose</td><td>Framework</td><td>Developer</td><td>Framework</td><td>Framework</td></tr><tr><td>CSS Pseudo</td><td>Manual</td><td>Integrated</td><td>Pseudo-element</td><td>Element</td></tr><tr><td><strong>Three-Layer</strong></td><td>Separated</td><td>Separated</td><td><strong>Architectural (Layer 1)</strong></td><td><strong>Layer 1</strong></td></tr></tbody></table> <p><strong>Three-Layer is unique in treating touch targets as an architectural layer</strong>, not a styling afterthought or framework magic.</p> <hr/> <h1>Part IX: Conclusion and Call to Action</h1> <h2>The Decade-Long Failure</h2> <p>For ten years, we’ve watched web accessibility stagnate:</p> <ul><li><strong>2015</strong>: 98%+ of websites fail accessibility standards</li> <li><strong>2025</strong>: 94.8% of websites still fail accessibility standards</li></ul> <p>Progress has been glacial. At current rates, achieving broad accessibility would take <strong>decades</strong>.</p> <p>Meanwhile:</p> <ul><li><strong>1.3 billion people</strong> live with disabilities</li> <li><strong>4,000+ lawsuits</strong> filed annually</li> <li><strong>$490 billion</strong> in spending power ignored</li> <li>Millions experience daily frustration, exclusion, and discrimination</li></ul> <h2>The False Choice is Over</h2> <p>The Three-Layer Architecture proves that accessibility and aesthetics are not opposing forces:</p> <pre class="language-undefined"><!----><code class="language-undefined">The Old Paradigm (Rejected)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+            Accessibility ◄────────── CHOOSE ──────────► Aesthetics
+
+
+The New Paradigm (Three-Layer Architecture)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                    ┌──────────────────────────┐
+                    │                          │
+                    │   Accessibility (L1)     │
+                    │         AND              │
+                    │   Aesthetics (L2)        │
+                    │         AND              │
+                    │   Content (L3)           │
+                    │                          │
+                    └──────────────────────────┘
+
+                    Different concerns.
+                    Different layers.
+                    Both excellent.</code><!----></pre> <h2>For Engineering Leaders</h2> <p><strong>Adopt Three-Layer Architecture as your component standard:</strong></p> <ol><li><strong>Audit existing components</strong>: Identify touch target failures</li> <li><strong>Establish baseline</strong>: 44×44px minimum for Layer 1</li> <li><strong>Train teams</strong>: Separation of concerns for accessibility</li> <li><strong>Validate</strong>: Automated testing for each layer</li> <li><strong>Document</strong>: Make the architecture explicit</li></ol> <h2>For Designers</h2> <p><strong>Embrace the creative freedom:</strong></p> <ol><li><strong>Design without constraint</strong>: Visual layer is independent</li> <li><strong>Trust the architecture</strong>: Touch targets are handled</li> <li><strong>Focus on excellence</strong>: Accessibility is built in</li> <li><strong>Think in layers</strong>: Visual appearance ≠ touch target</li> <li><strong>Test with users</strong>: Validate both aesthetics and usability</li></ol> <h2>For the Industry</h2> <p><strong>It’s time to raise the standard:</strong></p> <ol><li><strong>Stop shipping inaccessible components</strong></li> <li><strong>Stop treating accessibility as optional</strong></li> <li><strong>Stop forcing the false choice</strong></li> <li><strong>Start building for everyone</strong></li></ol> <h2>The Path Forward</h2> <p>Web accessibility has been stuck for a decade because we’ve been approaching it wrong. We’ve treated it as:</p> <ul><li>A compliance checkbox (add ARIA attributes)</li> <li>A styling constraint (make buttons bigger)</li> <li>An overlay solution (JavaScript widgets)</li> <li>An optional enhancement (accessibility mode)</li></ul> <p><strong>None of these work.</strong></p> <p>The Three-Layer Architecture succeeds because it treats accessibility as what it actually is: <strong>an architectural concern</strong> that must be designed into the foundation of every component.</p> <p>The invisible layer does the work. The visible layer gets the attention. Everyone gets what they need.</p> <hr/> <h2>References</h2> <h3>WebAIM Million Reports</h3> <ul><li><a href="https://webaim.org/projects/million/" rel="nofollow">WebAIM Million 2025</a> - Latest annual report</li> <li><a href="https://webaim.org/projects/million/2024" rel="nofollow">WebAIM Million 2024</a></li> <li><a href="https://webaim.org/projects/million/2023" rel="nofollow">WebAIM Million 2023</a></li> <li><a href="https://webaim.org/projects/million/2022" rel="nofollow">WebAIM Million 2022</a></li> <li><a href="https://webaim.org/projects/million/2021" rel="nofollow">WebAIM Million 2021</a></li> <li><a href="https://webaim.org/projects/million/2020" rel="nofollow">WebAIM Million 2020</a></li> <li><a href="https://webaim.org/projects/million/2019" rel="nofollow">WebAIM Million 2019</a> - First report</li></ul> <h3>WCAG Standards</h3> <ul><li><a href="https://www.w3.org/WAI/WCAG21/Understanding/target-size.html" rel="nofollow">WCAG 2.5.5 Target Size (Enhanced)</a> - W3C</li> <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" rel="nofollow">WCAG 2.5.8 Target Size (Minimum)</a> - W3C</li> <li><a href="https://accessibleweb.com/wcag/wcag-version-history/" rel="nofollow">WCAG Version History</a> - Accessible Web</li> <li><a href="https://www.accessibility.com/blog/a-timeline-of-wcag-and-digital-accessibility" rel="nofollow">Timeline of WCAG and Digital Accessibility</a></li></ul> <h3>Legal and Compliance</h3> <ul><li><a href="https://www.ecomback.com/ada-website-lawsuits-recap-report/2025-mid-year-ada-website-lawsuit-report" rel="nofollow">2025 Mid-Year ADA Lawsuit Report</a> - EcomBack</li> <li><a href="https://www.accessibility.works/blog/ada-lawsuit-trends-statistics-2024-summary/" rel="nofollow">ADA Lawsuit Trends 2024</a> - Accessibility.Works</li> <li><a href="https://www.audioeye.com/post/website-accessibility-in-2025/" rel="nofollow">Website Accessibility in 2025</a> - AudioEye</li> <li><a href="https://blog.usablenet.com/2025-midyear-accessibility-lawsuit-report-key-legal-trends" rel="nofollow">2025 Midyear Accessibility Lawsuit Report</a> - UsableNet</li></ul> <h3>Disability Statistics</h3> <ul><li><a href="https://www.who.int/teams/noncommunicable-diseases/sensory-functions-disability-and-rehabilitation/world-report-on-disability" rel="nofollow">World Report on Disability</a> - WHO</li> <li><a href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" rel="nofollow">Disability and Health Fact Sheet</a> - WHO</li> <li><a href="https://www.worldbank.org/en/topic/disability" rel="nofollow">Disability Inclusion Overview</a> - World Bank</li></ul> <h3>Motor Impairment Research</h3> <ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3572909/" rel="nofollow">Touch Screen Performance by Individuals With and Without Motor Control Disabilities</a> - PMC</li> <li><a href="https://link.springer.com/article/10.1007/s10209-013-0320-5" rel="nofollow">Mobile touchscreen user interfaces: bridging the gap</a> - Springer</li> <li><a href="https://dl.acm.org/doi/fullHtml/10.1145/3597638.3608396" rel="nofollow">Smartphones Fail Users with Dexterity Differences</a> - ACM</li></ul> <h3>Framework Documentation</h3> <ul><li><a href="https://react-spectrum.adobe.com/react-aria/index.html" rel="nofollow">React Aria</a> - Adobe</li> <li><a href="https://react-spectrum.adobe.com/architecture.html" rel="nofollow">React Spectrum Architecture</a> - Adobe</li> <li><a href="https://www.radix-ui.com/" rel="nofollow">Radix UI</a></li> <li><a href="https://headlessui.com/" rel="nofollow">Headless UI</a> - Tailwind Labs</li> <li><a href="https://github.com/mui/material-ui/issues/21808" rel="nofollow">Material UI Accessibility</a></li> <li><a href="https://getbootstrap.com/docs/5.3/getting-started/accessibility/" rel="nofollow">Bootstrap Accessibility</a></li></ul> <h3>Design and UX Research</h3> <ul><li><a href="https://www.forrester.com/blogs/09-10-15-leaving_user_experience_to_chance_hurts_companies/" rel="nofollow">Leaving User Experience To Chance Hurts Companies</a> - Forrester Research (2009), source of the “400% conversion” statistic</li> <li><a href="https://www.nngroup.com/articles/aesthetic-usability-effect/" rel="nofollow">Aesthetic-Usability Effect</a> - Nielsen Norman Group</li> <li><a href="https://www.conversionry.com.au/blogs/news/the-impact-of-ux-design-on-conversion-rates" rel="nofollow">Impact of UX on Conversion Rates</a> - Conversionry</li> <li><a href="https://ishadeed.com/article/clickable-area/" rel="nofollow">Enhancing Clickable Area Size</a> - Ahmad Shadeed</li> <li><a href="https://docs.deque.com/devtools-mobile/2024.9.18/en/ios-touch-target-spacing/" rel="nofollow">Touch Target Spacing</a> - Deque</li></ul> <h3>Component Patterns</h3> <ul><li><a href="https://martinfowler.com/articles/headless-component.html" rel="nofollow">Headless Component Pattern</a> - Martin Fowler</li> <li><a href="https://www.patterns.dev/react/compound-pattern/" rel="nofollow">Compound Component Pattern</a> - Patterns.dev</li> <li><a href="https://www.patterns.dev/vue/renderless-components/" rel="nofollow">Renderless Components in Vue</a> - Patterns.dev</li> <li><a href="https://css-tricks.com/enhancing-the-clickable-area-size/" rel="nofollow">CSS Hit-Slop Techniques</a> - CSS-Tricks</li></ul> <hr/> <h2>Appendix A: Quick Reference Card</h2> <h3>The Three Layers</h3> <table><thead><tr><th>Layer</th><th>Element</th><th>Purpose</th><th>Size</th><th>Focus</th></tr></thead><tbody><tr><td>1</td><td><code>&lt;button></code> / AriaButton</td><td>Touch target</td><td>44×44px min</td><td>YES</td></tr><tr><td>2</td><td><code>&lt;span></code></td><td>Visual appearance</td><td>Any</td><td>NO</td></tr><tr><td>3</td><td>Children</td><td>Content &amp; state</td><td>Fits L2</td><td>NO</td></tr></tbody></table> <h3>Touch Target Requirements</h3> <table><thead><tr><th>Standard</th><th>Minimum</th><th>Level</th><th>Notes</th></tr></thead><tbody><tr><td>WCAG 2.2</td><td>24×24px</td><td>AA</td><td>Legal minimum</td></tr><tr><td>WCAG 2.1</td><td>44×44px</td><td>AAA</td><td>Recommended</td></tr><tr><td>Apple iOS</td><td>44×44pt</td><td>-</td><td>Human Interface Guidelines</td></tr><tr><td>Android</td><td>48×48dp</td><td>-</td><td>Material Design</td></tr><tr><td>Microsoft</td><td>44×44px</td><td>-</td><td>Fluent Design</td></tr></tbody></table> <h3>Gap Mitigation Strategies</h3> <ol><li><strong>Grid-aware spacing</strong>: Design grid around 44px cells with <code>gap: 0</code></li> <li><strong>Accept the gap</strong>: In many cases, extra spacing improves usability for everyone</li></ol> <h3>Anti-Patterns to AVOID</h3> <p>❌ <strong>Overlapping touch targets with z-index</strong>: Higher z-index elements steal taps intended for adjacent elements.</p> <p>❌ <strong>Shared touch targets</strong>: Wrapping multiple controls in one container breaks keyboard navigation and screen reader semantics.</p> <p>❌ <strong>Responsive touch targets</strong>: Using <code>@media (pointer: fine)</code> assumes device precision = user ability.</p> <p>❌ <strong>Negative margins</strong>: Creates overlapping touch targets with the same harmful effects as z-index overlap.</p> <hr/> <h2>Appendix B: Implementation Checklist</h2> <h3>Component Development</h3> <ul class="contains-task-list"><li class="task-list-item"><input type="checkbox" disabled/> Layer 1 has <code>min-h-[44px] min-w-[44px]</code></li> <li class="task-list-item"><input type="checkbox" disabled/> Layer 1 is the semantic element (<code>&lt;button></code>, etc.)</li> <li class="task-list-item"><input type="checkbox" disabled/> Layer 1 has focus ring styles</li> <li class="task-list-item"><input type="checkbox" disabled/> Layer 1 is transparent (no background)</li> <li class="task-list-item"><input type="checkbox" disabled/> Layer 2 has NO focus ring styles</li> <li class="task-list-item"><input type="checkbox" disabled/> Layer 2 visual size controlled independently</li> <li class="task-list-item"><input type="checkbox" disabled/> Layer 3 has <code>pointer-events: none</code> where needed</li> <li class="task-list-item"><input type="checkbox" disabled/> Icon/dot variants require <code>aria-label</code></li> <li class="task-list-item"><input type="checkbox" disabled/> Loading state has <code>aria-live="polite"</code> announcement</li> <li class="task-list-item"><input type="checkbox" disabled/> Animations use <code>motion-safe:</code> prefix</li></ul> <h3>Testing</h3> <ul class="contains-task-list"><li class="task-list-item"><input type="checkbox" disabled/> Unit tests verify layer structure</li> <li class="task-list-item"><input type="checkbox" disabled/> Unit tests verify touch target size classes</li> <li class="task-list-item"><input type="checkbox" disabled/> Accessibility audit passes (jest-axe)</li> <li class="task-list-item"><input type="checkbox" disabled/> Visual regression tests capture appearance</li> <li class="task-list-item"><input type="checkbox" disabled/> Keyboard navigation works</li> <li class="task-list-item"><input type="checkbox" disabled/> Screen reader announces correctly</li> <li class="task-list-item"><input type="checkbox" disabled/> High contrast mode works</li> <li class="task-list-item"><input type="checkbox" disabled/> Reduced motion respected</li></ul> <h3>Documentation</h3> <ul class="contains-task-list"><li class="task-list-item"><input type="checkbox" disabled/> Layer architecture documented</li> <li class="task-list-item"><input type="checkbox" disabled/> <code>visualSize</code> prop explained</li> <li class="task-list-item"><input type="checkbox" disabled/> Accessibility requirements noted</li> <li class="task-list-item"><input type="checkbox" disabled/> Examples for all variants provided</li></ul> <hr/> <p><em>This white paper represents research and implementation experience by Mark Basford. The Three-Layer Architecture is implemented in the Themis component library.</em></p><!----><!--]--></div></article><!----><!----></main> <footer class="border-t border-border"><div class="mx-auto flex max-w-4xl flex-col items-center gap-6 px-6 py-12 sm:flex-row sm:justify-between"><p class="text-sm text-muted-foreground">© 2025 Mark Basford</p> <nav aria-label="Social links" class="flex items-center gap-2"><!--[--><a href="https://www.linkedin.com/in/mark-basford-78a43390/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" aria-label="LinkedIn (opens in new tab)"><!--[--><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg><!--]--></a><a href="https://github.com/mugglemagic" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-2 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" aria-label="GitHub (opens in new tab)"><!--[!--><!--[--><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg><!--]--><!--]--></a><!--]--></nav><!----></div></footer><!----></div><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_moh665 = {
+						base: new URL("..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.gJeQT9fj.js"),
+						import("../_app/immutable/entry/app.6Y1gGeRj.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

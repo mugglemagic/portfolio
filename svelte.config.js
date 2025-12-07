@@ -21,7 +21,8 @@ const config = {
 			strict: true
 		}),
 		prerender: {
-			handleHttpError: 'warn'
+			handleHttpError: 'warn',
+			handleMissingId: 'warn'
 		}
 	}
 }

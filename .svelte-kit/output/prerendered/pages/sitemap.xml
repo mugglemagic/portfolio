@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://markbasford.com/</loc>
+    
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/about</loc>
+    
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog</loc>
+    
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/WP-001-three-layer-component-architecture</loc>
+    <lastmod>2025-12-07T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0022-one-doc-site-to-rule-them-all</loc>
+    <lastmod>2025-12-01T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0006-the-observability-iceberg</loc>
+    <lastmod>2025-01-21T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0005-the-server-side-shield</loc>
+    <lastmod>2025-01-20T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0004-the-compliance-trap</loc>
+    <lastmod>2025-01-19T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0003-the-44px-illusion</loc>
+    <lastmod>2025-01-18T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0002-why-react-aria-won</loc>
+    <lastmod>2025-01-17T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0001-the-multizone-gambit</loc>
+    <lastmod>2025-01-16T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://markbasford.com/blog/FR-0000-why-we-are-writing-this</loc>
+    <lastmod>2025-01-15T00:00:00.000Z</lastmod>
+    <priority>0.7</priority>
+  </url>
+</urlset>
